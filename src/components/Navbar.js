@@ -8,8 +8,8 @@ export default function Navbar() {
     const style={
         Navbar:{
             backgroundColor: "#2d3036",
-            color:"white",
             padding:"2.1vh",
+            pl:3
             
         },
         LogoText:{

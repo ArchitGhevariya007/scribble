@@ -1,24 +1,43 @@
 import React from "react";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Grid } from "@mui/material";
+import { CiGrid41, CiBank } from "react-icons/ci";
+
 export default function Sidebar() {
-  const style={
-    SideBarBody:{
+  const style = {
+    SideBarBody: {
       backgroundColor: "#2d3036",
-      width:"12%",
-      color:"white",
-      pt:2,
-      pl:2,
-      height:"100vh"
-    }
-  }
+      width: "200px",
+      pt: 3.5,
+      pl: 3,
+      height: "100vh",
+      // position:"fixed",
+      float:"left",
+      overflow: "auto"
+    },
+  };
+
+  //sidebar icons & names
+  const iconlist = [
+    { icon: CiGrid41, name: "Home" },
+    { icon: CiBank, name: "Test" },
+  ];
+
   return (
-  <>
-  <Box sx={style.SideBarBody}>
-    <Stack>
-      <p>Hello</p>
-      <p>World</p>
-    </Stack>
-  </Box>
-  </>
+    <>
+      <Box sx={style.SideBarBody}>
+        <Stack>
+          {iconlist.map((data, index) => (
+            <Grid container direction="row" alignItems="center" key={index}>
+              <Grid item xs={2.5}>
+                <data.icon size="1.5em" />
+              </Grid>
+              <Grid item xs={9}>
+                <p>{data.name}</p>
+              </Grid>
+            </Grid>
+          ))}
+        </Stack>
+      </Box>
+    </>
   );
 }
