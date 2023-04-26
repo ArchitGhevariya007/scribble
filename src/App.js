@@ -1,14 +1,16 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import MainCotainer from "./components/MainContainer";
 
 function App() {
   return (
     <>
-      
+
       <Navbar></Navbar>
       <Sidebar></Sidebar>
-      <div style={{width:"80%",marginLeft:"210px"}}>Hello world</div>
+      <MainCotainer></MainCotainer>
+
     </>
   );
 }
