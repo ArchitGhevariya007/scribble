@@ -1,75 +1,54 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Box, Tab, Typography, Tabs } from "@mui/material";
+import TabPanel from '@mui/lab/TabPanel';
 import { useState } from "react";
-
-//Tabs function --- Taken from Mui documentation
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 // Main function
 export default function ContentTab() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const style = {
+    mainContainer: {
+      float:"left",
+      padding:3
+    },
+    tabs:{
+      color:"rgb(232, 232, 232)"
+    }
+  };
+
   return (
-    <>
-    <Box>
+    <Box sx={style.mainContainer}>
+
+      <Box >
         <Typography variant="h2">Hello</Typography>
-    </Box>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      </Box>
+
+      <Box sx={{ borderBottom: 1, borderColor: "#22262b",mt:3 }}>
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Todos" value="1" sx={style.tabs}/>
+          <Tab label="Notes" value="2" sx={style.tabs}/>
+          <Tab label="Link" value="3" sx={style.tabs}/>
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </>
+      
+        <TabPanel value="1" index={0}>
+          Item One
+        </TabPanel>
+        <TabPanel value="2" index={1}>
+          Item Two
+        </TabPanel>
+        <TabPanel value="3" index={2}>
+          Item Three
+        </TabPanel>
+
+    </Box>
   );
 }

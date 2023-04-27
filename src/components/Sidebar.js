@@ -10,7 +10,6 @@ export default function Sidebar() {
       pt: 3.5,
       pl: 3,
       height: "100vh",
-      // position:"fixed",
       float:"left",
       overflow: "auto"
     },
