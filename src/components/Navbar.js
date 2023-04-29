@@ -9,7 +9,10 @@ export default function Navbar() {
         Navbar:{
             backgroundColor: "#2d3036",
             padding:"2.1vh",
-            pl:3
+            pl:3,
+            position:"fixed",
+            top:0,
+            width:"100%"
             
         },
         LogoText:{

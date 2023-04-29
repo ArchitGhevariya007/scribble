@@ -11,7 +11,8 @@ export default function Sidebar() {
       pl: 3,
       height: "100vh",
       float:"left",
-      overflow: "auto"
+      position:"fixed",
+      overflow: "auto",
     },
   };
 
