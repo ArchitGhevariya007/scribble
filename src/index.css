@@ -1,13 +1,40 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap');
+
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
   margin: 0;
   /* font-family: 'Poppins', sans-serif; */
-  font-family: 'Ubuntu', sans-serif;
-
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #22262b;
   color:rgb(232, 232, 232);
+}
+  
+/************** scrollBar **************/
+::-webkit-scrollbar {
+  width: 7px;
+  border-radius: 200px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* background: #2d3036;  */
+  background: transparent;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2d3036; 
+  border: 5px solid transparent;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
