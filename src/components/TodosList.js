@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function TodosList(props) {
+export default function TodosList() {
   return (
     <>
       <p>
-        {props.task}
+        {localStorage.getItem('Task')}
       </p>
     </>
   );
