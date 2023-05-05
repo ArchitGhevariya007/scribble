@@ -68,8 +68,7 @@ export default function Todos() {
   //Add todo text
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
-  const [Checked, setChecked] = useState(); 
-  console.log(Checked)
+  const [Checked, setChecked] = useState(false); 
 
   // Add button handling
   const AddTodo = (e) => {
@@ -79,7 +78,7 @@ export default function Todos() {
         {
           id: uuid(),
           task: TodoText,
-          isSelected: true,
+          isSelected: false,
         },
       ]);
 
@@ -94,7 +93,11 @@ export default function Todos() {
   }, [AddTodoText]);
 
   //delete handling function
-  const DeleteTask = () => {};
+  const DeleteTask = (index) => {
+    let newList=[...AddTodoText];
+    newList.splice(index,1);
+    SetAddTodoText([...newList]);
+  };
 
   return (
     <>
@@ -137,8 +140,8 @@ export default function Todos() {
                       <Checkbox
                         sx={style.CheckBox}
                         color="primary"
-                        onChange={() => {
-                          setChecked(data.isSelected);
+                        onChange={(e) => {
+                          setChecked(e.target.checked);
                         }}
                         checked={Checked}
                       />
@@ -149,7 +152,7 @@ export default function Todos() {
                     <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} />
                     <MdOutlineDelete
                       style={{ cursor: "pointer" }}
-                      onClick={DeleteTask}
+                      onClick={()=>{DeleteTask(key)}}
                     />
                   </Box>
                 </Stack>
