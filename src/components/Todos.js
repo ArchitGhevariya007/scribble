@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Box, TextField, Stack, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Stack,
+  Button,
+  Container,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { v4 as uuid } from "uuid";
-import TodosList from "./TodosList";
+import { RxPencil1 } from "react-icons/rx";
+import { MdOutlineDelete } from "react-icons/md";
 
 export default function Todos() {
   //Css
@@ -20,13 +29,28 @@ export default function Todos() {
       "& fieldset": { border: "none" },
     },
     todolist: {
-      backgroundColor: "#2d3036",
+      //backgroundColor: "#2d3036",
       padding: 1,
       mt: 2,
       borderRadius: 2,
       minHeight: "48vh",
       height: "auto",
       marginBottom: "10px",
+    },
+    todoContainer: {
+      backgroundColor: "#2d3036",
+      mt: 1,
+      mb: 1,
+      padding: 0.5,
+      borderRadius: 1,
+    },
+    CheckBox: {
+      color: "rgb(232, 232, 232)",
+      borderRadius: 20,
+      "&:checked+label": {
+        textDecorationLine: "line-through",
+      },
+
     },
   };
 
@@ -44,6 +68,8 @@ export default function Todos() {
   //Add todo text
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
+  const [Checked, setChecked] = useState(); 
+  console.log(Checked)
 
   // Add button handling
   const AddTodo = (e) => {
@@ -53,7 +79,7 @@ export default function Todos() {
         {
           id: uuid(),
           task: TodoText,
-          isSelected:true
+          isSelected: true,
         },
       ]);
 
@@ -66,6 +92,9 @@ export default function Todos() {
   useEffect(() => {
     localStorage.setItem("Tasks", JSON.stringify(AddTodoText));
   }, [AddTodoText]);
+
+  //delete handling function
+  const DeleteTask = () => {};
 
   return (
     <>
@@ -88,12 +117,46 @@ export default function Todos() {
               </Stack>
             ),
           }}
-        /> 
+        />
       </Box>
 
       {/* Task List */}
       <Box sx={style.todolist}>
-        <TodosList Textdata={AddTodoText}></TodosList>
+        {AddTodoText != null
+          ? AddTodoText.map((data, key) => (
+              <Container maxWidth="lg" key={key} sx={style.todoContainer}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <FormControlLabel
+                    label={<span style={{textDecoration: Checked ? "line-through" : "none"}}>{data.task}</span>}
+                    control={
+                      <Checkbox
+                        sx={style.CheckBox}
+                        color="primary"
+                        onChange={() => {
+                          setChecked(data.isSelected);
+                        }}
+                        checked={Checked}
+                      />
+                    }
+                  />
+
+                  <Box>
+                    <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} />
+                    <MdOutlineDelete
+                      style={{ cursor: "pointer" }}
+                      onClick={DeleteTask}
+                    />
+                  </Box>
+                </Stack>
+              </Container>
+            ))
+          : ""}
+    
       </Box>
     </>
   );

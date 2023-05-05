@@ -10,11 +10,13 @@ import { RxPencil1 } from "react-icons/rx";
 import { MdOutlineDelete } from "react-icons/md";
 
 export default function TodosList(props) {
+
   const [Checked, setChecked] = useState();
 
+  //Css
   const style = {
     todoContainer: {
-      //backgroundColor: "#22262b",
+      backgroundColor: "#2d3036",
       mt: 1,
       mb: 1,
       padding: 0.5,
@@ -28,17 +30,13 @@ export default function TodosList(props) {
       },
       line: {
         textDecoration: Checked ? "line-through" : "none",
-      },
-      icons:{
-        marginLeft:100,
-        color:"#000",
-        fontSize:"10px"
-        //padding:10
       }
     },
   };
 
-  console.log(Checked);
+  const DeleteTask=()=>{
+
+  }
 
   return (
     <>
@@ -52,7 +50,7 @@ export default function TodosList(props) {
                 spacing={1}
               >
                 <FormControlLabel
-                  label={<span style={style.line}>{data.task}</span>}
+                  label={<span sx={style.line}>{data.task}</span>}
                   control={
                     <Checkbox
                       sx={style.CheckBox}
@@ -67,8 +65,8 @@ export default function TodosList(props) {
                 />
 
                 <Box>
-                  <RxPencil1  style={{marginRight:7,cursor:"pointer"}}/>
-                  <MdOutlineDelete style={{cursor:"pointer"}} />
+                  <RxPencil1  style={{marginRight:10,cursor:"pointer"}}/>
+                  <MdOutlineDelete style={{cursor:"pointer"}}  onClick={DeleteTask}/>
                 </Box>
               </Stack>
             </Container>
