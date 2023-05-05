@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, TextField, Stack, Button, } from "@mui/material";
+import { Box, TextField, Stack, Button } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import TodosList from "./TodosList";
 
@@ -53,6 +53,7 @@ export default function Todos() {
         {
           id: uuid(),
           task: TodoText,
+          isSelected:true
         },
       ]);
 
@@ -64,7 +65,6 @@ export default function Todos() {
   // setting data to local storage
   useEffect(() => {
     localStorage.setItem("Tasks", JSON.stringify(AddTodoText));
-    
   }, [AddTodoText]);
 
   return (
@@ -88,16 +88,13 @@ export default function Todos() {
               </Stack>
             ),
           }}
-        />
+        /> 
       </Box>
 
+      {/* Task List */}
       <Box sx={style.todolist}>
-        
         <TodosList Textdata={AddTodoText}></TodosList>
-        
       </Box>
-
-      
     </>
   );
 }
