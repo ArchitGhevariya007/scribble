@@ -43,14 +43,16 @@ export default function Todos() {
       mb: 1,
       padding: 0.5,
       borderRadius: 1,
+      width:"100%",
+      "&:hover": {
+        backgroundColor: "#353940",
+        cursor: "pointer",
+        transition: "transform .3s ease-out",
+        transform: "scale(1.01)",
+      },
     },
     CheckBox: {
       color: "rgb(232, 232, 232)",
-      borderRadius: 20,
-      "&:checked+label": {
-        textDecorationLine: "line-through",
-      },
-
     },
   };
 
@@ -68,7 +70,7 @@ export default function Todos() {
   //Add todo text
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
-  const [Checked, setChecked] = useState(false); 
+  const [Checked, setChecked] = useState(false);
 
   // Add button handling
   const AddTodo = (e) => {
@@ -92,13 +94,14 @@ export default function Todos() {
     localStorage.setItem("Tasks", JSON.stringify(AddTodoText));
   }, [AddTodoText]);
 
-  //delete handling function
+  //delete todos function
   const DeleteTask = (index) => {
-    let newList=[...AddTodoText];
-    newList.splice(index,1);
+    let newList = [...AddTodoText];
+    newList.splice(index, 1);
     SetAddTodoText([...newList]);
   };
 
+  
   return (
     <>
       {/* Add Todo Text Box */}
@@ -135,7 +138,15 @@ export default function Todos() {
                   spacing={1}
                 >
                   <FormControlLabel
-                    label={<span style={{textDecoration: Checked ? "line-through" : "none"}}>{data.task}</span>}
+                    label={
+                      <span
+                        style={{
+                          textDecoration: Checked ? "line-through" : "none",
+                        }}
+                      >
+                        {data.task}
+                      </span>
+                    }
                     control={
                       <Checkbox
                         sx={style.CheckBox}
@@ -151,15 +162,18 @@ export default function Todos() {
                   <Box>
                     <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} />
                     <MdOutlineDelete
-                      style={{ cursor: "pointer" }}
-                      onClick={()=>{DeleteTask(key)}}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        DeleteTask(key);
+                      }}
                     />
                   </Box>
                 </Stack>
               </Container>
             ))
           : ""}
-    
       </Box>
     </>
   );

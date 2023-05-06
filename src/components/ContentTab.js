@@ -56,7 +56,7 @@ export default function ContentTab() {
           </Grid>
 
           {/* Search Box */}
-          <Grid item xs={3}>
+          <Grid item xs={1}>
             <input
               type="text"
               placeholder="Search Task"
