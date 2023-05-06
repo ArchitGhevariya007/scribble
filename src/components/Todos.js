@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -67,12 +67,11 @@ export default function Todos() {
     }
   };
 
-  //Add todo text
+  //************* Add todo text *************
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
-  // const [Checked, setChecked] = useState(false);
 
-  // Add button handling
+  //************* Add button handling *************
   const AddTodo = (e) => {
     if (TodoText !== "") {
       SetAddTodoText([
@@ -83,56 +82,32 @@ export default function Todos() {
           isSelected: false,
         },
       ]);
-
       SetTodoText("");
       e.preventDefault();
     }
   };
 
-  // setting data to local storage
+  //************* set data to local storage *************
   useEffect(() => {
     localStorage.setItem("Tasks", JSON.stringify(AddTodoText));
   }, [AddTodoText]);
 
-  //delete todos function
+  //************* delete todos function *************
   const DeleteTask = (index) => {
     let newList = [...AddTodoText];
     newList.splice(index, 1);
     SetAddTodoText([...newList]);
   };
 
-  //handle Checkbox Change
+  //************* handle Checkbox Change *************
 
-  const labelRefs = useRef([]);
-
-  const handleCheckboxChange = (event, index) => {
-    //SetAddTodoText(
-    // AddTodoText.map((tasks) => (
-    //   tasks.id===index?
-    //   {
-    //   ...tasks,
-    //   isSelected: event.target.checked,
-
-    // }:console.log("Err")))
-    //);
-
+  const handleCheckboxChange = (event, index, id) => {
+    //update checkbox status
     SetAddTodoText(
-      {
-        ...AddTodoText,
-        isSelected: event.target.checked,
-      },
+      AddTodoText.map((item) =>
+        item.id === id ? { ...item, isSelected: event.target.checked } : item
+      )
     );
-
-    console.log(event.target.checked);
-
-    //Line through css
-    const labelEl = labelRefs.current[index];
-
-    if (event.target.checked) {
-      labelEl.style.textDecoration = "line-through";
-    } else {
-      labelEl.style.textDecoration = "none";
-    }
   };
 
   return (
@@ -172,7 +147,13 @@ export default function Todos() {
                 >
                   <FormControlLabel
                     label={
-                      <span ref={(el) => (labelRefs.current[key] = el)}>
+                      <span
+                        style={{
+                          textDecoration: data.isSelected
+                            ? "line-through"
+                            : "none",
+                        }}
+                      >
                         {data.task}
                       </span>
                     }
@@ -180,8 +161,10 @@ export default function Todos() {
                       <Checkbox
                         sx={style.CheckBox}
                         color="primary"
-                        onChange={(event) => handleCheckboxChange(event, key)}
-                        // checked={Checked}
+                        onChange={(event) =>
+                          handleCheckboxChange(event, key, data.id)
+                        }
+                        checked={data.isSelected}
                       />
                     }
                   />
