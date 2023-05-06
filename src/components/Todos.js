@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   TextField,
@@ -9,7 +9,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
-import { RxPencil1 } from "react-icons/rx";
+//import { RxPencil1 } from "react-icons/rx";
 import { MdOutlineDelete } from "react-icons/md";
 
 export default function Todos() {
@@ -43,7 +43,7 @@ export default function Todos() {
       mb: 1,
       padding: 0.5,
       borderRadius: 1,
-      width:"100%",
+      width: "100%",
       "&:hover": {
         backgroundColor: "#353940",
         cursor: "pointer",
@@ -70,7 +70,7 @@ export default function Todos() {
   //Add todo text
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
-  const [Checked, setChecked] = useState(false);
+  // const [Checked, setChecked] = useState(false);
 
   // Add button handling
   const AddTodo = (e) => {
@@ -101,7 +101,40 @@ export default function Todos() {
     SetAddTodoText([...newList]);
   };
 
-  
+  //handle Checkbox Change
+
+  const labelRefs = useRef([]);
+
+  const handleCheckboxChange = (event, index) => {
+    //SetAddTodoText(
+    // AddTodoText.map((tasks) => (
+    //   tasks.id===index?
+    //   {
+    //   ...tasks,
+    //   isSelected: event.target.checked,
+
+    // }:console.log("Err")))
+    //);
+
+    SetAddTodoText(
+      {
+        ...AddTodoText,
+        isSelected: event.target.checked,
+      },
+    );
+
+    console.log(event.target.checked);
+
+    //Line through css
+    const labelEl = labelRefs.current[index];
+
+    if (event.target.checked) {
+      labelEl.style.textDecoration = "line-through";
+    } else {
+      labelEl.style.textDecoration = "none";
+    }
+  };
+
   return (
     <>
       {/* Add Todo Text Box */}
@@ -139,11 +172,7 @@ export default function Todos() {
                 >
                   <FormControlLabel
                     label={
-                      <span
-                        style={{
-                          textDecoration: Checked ? "line-through" : "none",
-                        }}
-                      >
+                      <span ref={(el) => (labelRefs.current[key] = el)}>
                         {data.task}
                       </span>
                     }
@@ -151,16 +180,14 @@ export default function Todos() {
                       <Checkbox
                         sx={style.CheckBox}
                         color="primary"
-                        onChange={(e) => {
-                          setChecked(e.target.checked);
-                        }}
-                        checked={Checked}
+                        onChange={(event) => handleCheckboxChange(event, key)}
+                        // checked={Checked}
                       />
                     }
                   />
 
                   <Box>
-                    <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} />
+                    {/* <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} /> */}
                     <MdOutlineDelete
                       style={{
                         cursor: "pointer",
