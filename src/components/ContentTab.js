@@ -3,6 +3,7 @@ import { Box, Tab, Typography, Grid } from "@mui/material";
 import { TabPanel, TabContext, TabList } from "@mui/lab";
 import { useState } from "react";
 import Todos from "./Todos";
+import Notes from "./Notes";
 
 // Main function
 export default function ContentTab() {
@@ -17,6 +18,7 @@ export default function ContentTab() {
       marginTop: 6.5,
       marginLeft: "220px",
       padding: 3,
+      width:"auto"
     },
     TabsContainer: {
       mt: 3,
@@ -49,7 +51,6 @@ export default function ContentTab() {
       {/* Header Container */}
       <Box sx={style.HeaderContainer}>
         <Grid container spacing={2}>
-
           {/* Date and Time */}
           <Grid item xs={9}>
             <Typography variant="h4">{today}</Typography>
@@ -68,10 +69,9 @@ export default function ContentTab() {
 
       <Box sx={style.TabsContainer}>
         <TabContext value={value}>
-
           {/* Tabs */}
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} >
+            <TabList onChange={handleChange}>
               <Tab label="Todos" value="1" disableRipple sx={style.TabColor} />
               <Tab label="Notes" value="2" disableRipple sx={style.TabColor} />
               <Tab label="Links " value="3" disableRipple sx={style.TabColor} />
@@ -82,7 +82,9 @@ export default function ContentTab() {
           <TabPanel value="1">
             <Todos />
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2">
+            <Notes />
+          </TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
       </Box>
