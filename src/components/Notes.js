@@ -1,5 +1,12 @@
-import React from "react";
-import { Box, Divider, Typography, Grid, TextField } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  Divider,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+} from "@mui/material";
 import { FiEdit3 } from "react-icons/fi";
 
 //Style
@@ -16,6 +23,8 @@ const style = {
     p: 1.5,
     borderRadius: 1,
     overflow: "hidden",
+    marginRight:3,
+    marginTop:3
   },
   contentBox: {
     height: "231px",
@@ -46,48 +55,57 @@ export default function Notes() {
     // weekday: "long",
   });
 
+  //Add new Note component
+  const [component, SetComponent] = useState([]);
+  const AddComponent = () => {
+    SetComponent([
+      ...component,
+      <Box component="div" sx={style.notesContainer}>
+        <TextField
+          size="small"
+          placeholder="Add Title"
+          fullwidth
+          sx={style.TitleInput}
+        />
+
+        <Box component="div" sx={style.contentBox}>
+          <TextField
+            id="outlined-multiline-static"
+            fullWidth
+            multiline
+            rows={10}
+            placeholder="Add Note here..."
+            sx={style.ContetntInput}
+            InputProps={{ style: { color: "#BCBCBC" } }}
+          />
+        </Box>
+
+        <Box component="div" sx={style.footer}>
+          <Divider />
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            style={{ marginTop: 7 }}
+          >
+            <Typography variant="p">{today}</Typography>
+            <Box component="div">
+              <FiEdit3 style={style.editIcon} />
+            </Box>
+          </Grid>
+        </Box>
+      </Box>
+    ]);
+  };
+
   return (
     <>
       <Box sx={style.MainContainer}>
-        <Box component="div" sx={style.notesContainer}>
-          {/* Title */}
-          <TextField
-            size="small"
-            placeholder="Add Title"
-            fullwidth
-            sx={style.TitleInput}
-          />
-
-          {/* note content */}
-          <Box component="div" sx={style.contentBox}>
-            <TextField
-            id="outlined-multiline-static"
-            fullWidth
-              multiline
-              rows={10}
-              placeholder="Add Note here..."
-              sx={style.ContetntInput}
-              InputProps={{style:{color: "#BCBCBC"}}}
-            />
-          </Box>
-
-          {/* footer */}
-          <Box component="div" sx={style.footer}>
-            <Divider />
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              style={{ marginTop: 7 }}
-            >
-              <Typography variant="p">{today}</Typography>
-              <Box component="div">
-                <FiEdit3 style={style.editIcon} />
-              </Box>
-            </Grid>
-          </Box>
-        </Box>
+        {component.map((components, index) => (
+          <Box component="div" key={index}>{components}</Box>
+        ))} 
+        <Button onClick={AddComponent}>Add</Button>
       </Box>
     </>
   );
