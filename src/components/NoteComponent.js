@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  Box,
-  Divider,
-  Typography,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { Box, Divider, Typography, Grid, TextField } from "@mui/material";
 import { FiEdit3 } from "react-icons/fi";
 
-export default function NoteComponent() {
+export default function NoteComponent(props) {
+
+  //Style
   const style = {
     notesContainer: {
       backgroundColor: "#2d3036",
@@ -45,8 +41,8 @@ export default function NoteComponent() {
   var today = new Date().toLocaleDateString(undefined, {
     month: "long",
     day: "2-digit",
-    // weekday: "long",
   });
+
   return (
     <>
       <Box component="div" sx={style.notesContainer}>
@@ -55,6 +51,10 @@ export default function NoteComponent() {
           placeholder="Add Title"
           fullwidth
           sx={style.TitleInput}
+          value={props.title}
+          onChange={(event) =>
+            props.handleNoteChange(props.index, "Title", event.target.value)
+          }
         />
 
         <Box component="div" sx={style.contentBox}>
@@ -64,8 +64,16 @@ export default function NoteComponent() {
             multiline
             rows={10}
             placeholder="Add Note here..."
+            value={props.description}
             sx={style.ContetntInput}
             InputProps={{ style: { color: "#BCBCBC" } }}
+            onChange={(event) =>
+              props.handleNoteChange(
+                props.index,
+                "Description",
+                event.target.value
+              )
+            }
           />
         </Box>
 
