@@ -12,8 +12,8 @@ export default function Navbar() {
             pl:3,
             position:"fixed",
             top:0,
-            width:"100%"
-            
+            width:"100%",
+            zIndex: "100",            
         },
         LogoText:{
             fontSize:"20px",

@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Divider, Typography, Grid, TextField } from "@mui/material";
+import { Box, Divider, Typography, Grid, TextField,IconButton } from "@mui/material";
 import { FiEdit3 } from "react-icons/fi";
+import NoteModal from "./NoteModal";
 
 export default function NoteComponent(props) {
 
@@ -47,9 +48,9 @@ export default function NoteComponent(props) {
     <>
       <Box component="div" sx={style.notesContainer}>
         <TextField
+          fullwidth
           size="small"
           placeholder="Add Title"
-          fullwidth
           sx={style.TitleInput}
           value={props.title}
           onChange={(event) =>
@@ -59,8 +60,8 @@ export default function NoteComponent(props) {
 
         <Box component="div" sx={style.contentBox}>
           <TextField
-            id="outlined-multiline-static"
             fullWidth
+            id="outlined-multiline-static"
             multiline
             rows={10}
             placeholder="Add Note here..."
@@ -88,7 +89,7 @@ export default function NoteComponent(props) {
           >
             <Typography variant="p">{today}</Typography>
             <Box component="div">
-              <FiEdit3 style={style.editIcon} />
+              <FiEdit3 style={style.editIcon} onClick={()=>{<NoteModal/>}} />
             </Box>
           </Grid>
         </Box>
