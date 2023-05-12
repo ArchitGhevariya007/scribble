@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Divider, Typography, Grid, TextField,IconButton } from "@mui/material";
+import { Box, Divider, Typography, Grid, TextField } from "@mui/material";
 import { FiEdit3 } from "react-icons/fi";
 import NoteModal from "./NoteModal";
 
@@ -43,6 +43,14 @@ export default function NoteComponent(props) {
     month: "long",
     day: "2-digit",
   });
+
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const MyContext = createContext(open);
+
 
   return (
     <>
@@ -89,7 +97,7 @@ export default function NoteComponent(props) {
           >
             <Typography variant="p">{today}</Typography>
             <Box component="div">
-              <FiEdit3 style={style.editIcon} onClick={()=>{<NoteModal/>}} />
+              <FiEdit3 style={style.editIcon} onClick={()=>{<NoteModal open/>}} />
             </Box>
           </Grid>
         </Box>
