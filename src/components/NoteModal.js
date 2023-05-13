@@ -1,24 +1,42 @@
 import React, { useState } from "react";
-import { Backdrop, Box, Modal, Fade, Button, Typography } from "@mui/material";
+import { Backdrop, Box, Modal, Fade, TextField } from "@mui/material";
+import { FiEdit3 } from "react-icons/fi";
 
-export default function NoteModal() {
+export default function NoteModal(props) {
   const style = {
-    modal: {
+    Modal: {
       position: "absolute",
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: 400,
-      bgcolor: "background.paper",
-      border: "2px solid #000",
+      width: "80%",
+      bgcolor: "#2d3036",
       boxShadow: 24,
       p: 4,
+      borderRadius:1
     },
+    editIcon: {
+      cursor: "pointer",
+    },
+    TitleInput: {
+        input: {
+          color: "rgb(232, 232, 232)",
+          width: "100%",
+        },
+        "& fieldset": { border: "none" },
+      },
+      ContetntInput: {
+        "& fieldset": { border: "none" },
+      },
   };
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <>
+      <FiEdit3 style={style.editIcon} onClick={handleOpen} />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -33,13 +51,36 @@ export default function NoteModal() {
         }}
       >
         <Fade in={open}>
-          <Box sx={style.modal}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+          <Box sx={style.Modal}>
+            <TextField
+              size="small"
+              placeholder="Add Title"
+              sx={style.TitleInput}
+              value={props.title}
+              onChange={(event) =>
+                props.handleNoteChange(props.index, "Title", event.target.value)
+              }
+            />
+
+            <Box component="div" sx={style.contentBox}>
+              <TextField
+                fullWidth
+                id="outlined-multiline-static"
+                multiline
+                rows={10}
+                placeholder="Add Note here..."
+                value={props.description}
+                sx={style.ContetntInput}
+                InputProps={{ style: { color: "#BCBCBC" } }}
+                onChange={(event) =>
+                  props.handleNoteChange(
+                    props.index,
+                    "Description",
+                    event.target.value
+                  )
+                }
+              />
+            </Box>
           </Box>
         </Fade>
       </Modal>

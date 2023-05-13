@@ -1,10 +1,8 @@
 import React from "react";
 import { Box, Divider, Typography, Grid, TextField } from "@mui/material";
-import { FiEdit3 } from "react-icons/fi";
 import NoteModal from "./NoteModal";
 
 export default function NoteComponent(props) {
-
   //Style
   const style = {
     notesContainer: {
@@ -24,12 +22,10 @@ export default function NoteComponent(props) {
     footer: {
       marginTop: "10px",
     },
-    editIcon: {
-      cursor: "pointer",
-    },
     TitleInput: {
       input: {
         color: "rgb(232, 232, 232)",
+        width: "100%",
       },
       "& fieldset": { border: "none" },
     },
@@ -44,19 +40,10 @@ export default function NoteComponent(props) {
     day: "2-digit",
   });
 
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const MyContext = createContext(open);
-
-
   return (
     <>
       <Box component="div" sx={style.notesContainer}>
         <TextField
-          fullwidth
           size="small"
           placeholder="Add Title"
           sx={style.TitleInput}
@@ -97,7 +84,7 @@ export default function NoteComponent(props) {
           >
             <Typography variant="p">{today}</Typography>
             <Box component="div">
-              <FiEdit3 style={style.editIcon} onClick={()=>{<NoteModal open/>}} />
+              <NoteModal />
             </Box>
           </Grid>
         </Box>
