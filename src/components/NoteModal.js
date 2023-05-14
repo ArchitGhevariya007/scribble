@@ -4,30 +4,31 @@ import { FiEdit3 } from "react-icons/fi";
 
 export default function NoteModal(props) {
   const style = {
-    Modal: {
+    ModalBox: {
       position: "absolute",
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "80%",
+      width: "75%",
+      height:"70%",
       bgcolor: "#2d3036",
       boxShadow: 24,
       p: 4,
-      borderRadius:1
+      borderRadius: 1,
     },
     editIcon: {
       cursor: "pointer",
     },
     TitleInput: {
-        input: {
-          color: "rgb(232, 232, 232)",
-          width: "100%",
-        },
-        "& fieldset": { border: "none" },
+      input: {
+        color: "rgb(232, 232, 232)",
+        width: "100%",
       },
-      ContetntInput: {
-        "& fieldset": { border: "none" },
-      },
+      "& fieldset": { border: "none" },
+    },
+    ContetntInput: {
+      "& fieldset": { border: "none" },
+    },
   };
 
   const [open, setOpen] = useState(false);
@@ -51,7 +52,7 @@ export default function NoteModal(props) {
         }}
       >
         <Fade in={open}>
-          <Box sx={style.Modal}>
+          <Box sx={style.ModalBox}>
             <TextField
               size="small"
               placeholder="Add Title"

@@ -84,7 +84,12 @@ export default function NoteComponent(props) {
           >
             <Typography variant="p">{today}</Typography>
             <Box component="div">
-              <NoteModal />
+              <NoteModal
+                index={props.index}
+                title={props.title}
+                description={props.description}
+                handleNoteChange={props.handleNoteChange}
+              />
             </Box>
           </Grid>
         </Box>
