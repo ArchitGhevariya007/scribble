@@ -35,10 +35,12 @@ export default function NoteComponent(props) {
   };
 
   //Clock
-  var today = new Date().toLocaleDateString(undefined, {
-    month: "long",
-    day: "2-digit",
-  });
+  // var today = new Date().toLocaleDateString(undefined, {
+  //   month: "long",
+  //   day: "2-digit",
+  // });
+
+ 
 
   return (
     <>
@@ -82,13 +84,17 @@ export default function NoteComponent(props) {
             alignItems="center"
             style={{ marginTop: 7 }}
           >
-            <Typography variant="p">{today}</Typography>
+            <Typography variant="p">
+              {props.Date}
+              
+            </Typography>
             <Box component="div">
               <NoteModal
                 index={props.index}
                 title={props.title}
                 description={props.description}
                 handleNoteChange={props.handleNoteChange}
+                DeleteNote={props.DeleteNote}
               />
             </Box>
           </Grid>

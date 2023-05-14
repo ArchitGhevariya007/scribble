@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Backdrop, Box, Modal, Fade, TextField } from "@mui/material";
 import { FiEdit3 } from "react-icons/fi";
+import { MdOutlineDelete } from "react-icons/md";
 
 export default function NoteModal(props) {
   const style = {
@@ -27,17 +28,24 @@ export default function NoteModal(props) {
       "& fieldset": { border: "none" },
     },
     ContetntInput: {
-      "& fieldset": { border: "none" },
+       "& fieldset": { border: "none" },
     },
+    deleteIcon:{
+      marginLeft:8,
+      cursor: "pointer",
+    }
   };
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
+
   return (
     <>
       <FiEdit3 style={style.editIcon} onClick={handleOpen} />
+      <MdOutlineDelete style={style.deleteIcon} onClick={()=>props.DeleteNote(props.index)}/>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -68,7 +76,7 @@ export default function NoteModal(props) {
                 fullWidth
                 id="outlined-multiline-static"
                 multiline
-                rows={10}
+                rows={19}
                 placeholder="Add Note here..."
                 value={props.description}
                 sx={style.ContetntInput}
