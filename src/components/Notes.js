@@ -36,12 +36,11 @@ const style = {
 };
 
 export default function Notes() {
-
-    //Clock
-    var today = new Date().toLocaleDateString(undefined, {
-      month: "long",
-      day: "2-digit",
-    });
+  //Clock
+  var today = new Date().toLocaleDateString(undefined, {
+    month: "long",
+    day: "2-digit",
+  });
 
   //************* get data from local storage *************
   const getNotes = () => {
@@ -62,7 +61,7 @@ export default function Notes() {
       Id: uuid(),
       Title: "",
       Description: "",
-      Date:today
+      Date: today,
     };
     SetNote([...Note, newNote]);
   };
@@ -79,17 +78,18 @@ export default function Notes() {
     localStorage.setItem("Notes", JSON.stringify(Note));
   }, [Note]);
 
-    //************* delete Notes function *************
-    const DeleteNote = (index) => {
-      let newList = [...Note];
-      newList.splice(index, 1);
-      SetNote([...newList]);
-    };
+  //************* delete Notes function *************
+  const DeleteNote = (index) => {
+    let newList = [...Note];
+    newList.splice(index, 1);
+    SetNote([...newList]);
+  };
 
   return (
     <>
       <Box sx={style.MainContainer}>
         {Note.map((notes, index) => (
+          // Note Component
           <NoteComponent
             key={index}
             index={index}
@@ -102,6 +102,7 @@ export default function Notes() {
           />
         ))}
 
+        {/* Add new Note */}
         <Box
           component="div"
           sx={style.AddButtonContainer}

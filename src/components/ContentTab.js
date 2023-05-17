@@ -4,6 +4,7 @@ import { TabPanel, TabContext, TabList } from "@mui/lab";
 import { useState } from "react";
 import Todos from "./Todos";
 import Notes from "./Notes";
+import Links from "./Links";
 
 // Main function
 export default function ContentTab() {
@@ -18,7 +19,7 @@ export default function ContentTab() {
       marginTop: 6.5,
       marginLeft: "220px",
       padding: 3,
-      width:"auto"
+      width: "auto",
     },
     TabsContainer: {
       mt: 3,
@@ -85,7 +86,9 @@ export default function ContentTab() {
           <TabPanel value="2">
             <Notes />
           </TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
+          <TabPanel value="3">
+            <Links />
+          </TabPanel>
         </TabContext>
       </Box>
     </Box>

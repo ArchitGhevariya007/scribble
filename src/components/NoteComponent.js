@@ -34,17 +34,10 @@ export default function NoteComponent(props) {
     },
   };
 
-  //Clock
-  // var today = new Date().toLocaleDateString(undefined, {
-  //   month: "long",
-  //   day: "2-digit",
-  // });
-
- 
-
   return (
     <>
       <Box component="div" sx={style.notesContainer}>
+        {/* Note Title */}
         <TextField
           size="small"
           placeholder="Add Title"
@@ -55,6 +48,7 @@ export default function NoteComponent(props) {
           }
         />
 
+        {/* Note Content */}
         <Box component="div" sx={style.contentBox}>
           <TextField
             fullWidth
@@ -75,6 +69,8 @@ export default function NoteComponent(props) {
           />
         </Box>
 
+
+        {/* Note footer */}
         <Box component="div" sx={style.footer}>
           <Divider />
           <Grid
@@ -84,11 +80,10 @@ export default function NoteComponent(props) {
             alignItems="center"
             style={{ marginTop: 7 }}
           >
-            <Typography variant="p">
-              {props.Date}
-              
-            </Typography>
+            {/* Date */}
+            <Typography variant="p">{props.Date}</Typography>
             <Box component="div">
+              {/* Note Modal */}
               <NoteModal
                 index={props.index}
                 title={props.title}
