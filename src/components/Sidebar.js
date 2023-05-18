@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Stack, Grid, Button, TextField } from "@mui/material";
+import { v4 as uuid } from "uuid";
 import { IoIosMenu } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
 
 export default function Sidebar() {
+  //Style
   const style = {
     SideBarBody: {
       backgroundColor: "#2d3036",
@@ -24,52 +27,99 @@ export default function Sidebar() {
         backgroundColor: "rgba(232, 232, 232,0.04)",
       },
     },
-    SidebarItems: {},
-    textBox:{
-      width:"10%"
-      // "& fieldset": { border: "none" },
+    textBox: {
+      input: {
+        color: "rgb(232, 232, 232)",
+        p: 0.5,
+      },
     },
-    icons:{
-      fontSize:27
+    textBoxGrid: {
+      "& fieldset": { border: "none" },
+    },
+    iconsGrid: {
+      fontSize: 20,
+      mt: 1,
+      ml: 1,
+    },
+    DeleteIcon: {
+      mt: 0.7,
+      cursor: "pointer",
+    },
+    SidebarItem: {
+      backgroundColor: "#22262b",
+      borderRadius: 1,
+      padding: 0.5,
+      alignItems: "center",
+      mb: 1.1,
+    },
+  };
+
+  const getTabs = () => {
+    const LocalTodo = localStorage.getItem("Tabs");
+    if (LocalTodo === null) {
+      return [{ id: uuid(), tabName: "New" }];
+    } else {
+      return JSON.parse(LocalTodo);
     }
   };
 
-  // const DefaultIcon = () => {
-  //    {icon: IoIosMenu,
-  //    CompoName: "Home"}
-  // };
-  const [IconList, SetIconList] = useState();
-  //sidebar icons & names
-  // const iconlist = [
-  //   { icon: IoIosMenu, name: "Home" },
-  //   { icon: IoIosMenu, name: "Test" },
-  // ];
+  const [Tab, SetTab] = useState(getTabs());
+
+  //************* Add Tabs *************
+  const AddTab = () => {
+    SetTab([
+      ...Tab,
+      {
+        id: uuid(),
+        tabName: "",
+      },
+    ]);
+  };
+
+  //************* set data to local storage *************
+  useEffect(() => {
+    localStorage.setItem("Tabs", JSON.stringify(Tab));
+  }, [Tab]);
+
+  //************* delete Tabs function *************
+  const DeleteTabs = (index) => {
+    let newList = [...Tab];
+    newList.splice(index, 1);
+    SetTab([...newList]);
+  };
 
   return (
     <>
       <Box sx={style.SideBarBody}>
-        <Box sx={style.SidebarItems}>
-          <Grid container alignItems="center" spacing={2}>
-            <Grid item>
-              <IoIosMenu style={style.icons}/>
+        {Tab.map((tab, index) => (
+          <Box sx={style.SidebarItem} key={index}>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item xs={1.4} sx={style.iconsGrid}>
+                <IoIosMenu />
+              </Grid>
+              <Grid item xs={8} sx={style.textBoxGrid}>
+                <TextField
+                  size="small"
+                  sx={style.textBox}
+                  value={tab.tabName}
+                  onChange={(e) => {
+                    SetTab([{ tabName: e.target.value }]);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={2} sx={style.DeleteIcon}>
+                <MdOutlineDelete onClick={DeleteTabs} />
+              </Grid>
             </Grid>
-            <Grid item>
-              <TextField variant="outlined"  sx={style.textBox}/>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        ))}
+
         <Stack>
-          <Stack direction="row" spacing={2}>
-            {/* <IoIosMenu sx={Style.icon}/>
-            <TextField id="outlined-basic" sizee="small" variant="outlined" sx={style.TextBox}/> */}
-            {/* {IconList.map((icons, index) => (
-              <Grid key={index}>{icons.icon}</Grid>
-            ))} */}
-          </Stack>
           <Button
             variant="outlined"
             startIcon={<AiOutlinePlus />}
             sx={style.addButton}
+            onClick={AddTab}
           >
             Add
           </Button>
