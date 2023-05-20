@@ -51,6 +51,7 @@ export default function Sidebar() {
       padding: 0.5,
       alignItems: "center",
       mb: 1.1,
+      cursor:"pointer"
     },
   };
 
@@ -76,14 +77,13 @@ export default function Sidebar() {
     ]);
   };
 
-  const UpdateTabs = (e) => {
-    // SetTab((prevState) => (
-    //   {
-    //   ...prevState,
-    //   tabName: e.target.value
-    //   }
-    //   ));
+  //************* Update Tabs *************
+  const UpdateTabs = (e,index) => {
+    const updatedTabs = [...Tab];
+    updatedTabs[index].tabName = e.target.value;
+    SetTab(updatedTabs); 
   };
+
 
   //************* set data to local storage *************
   useEffect(() => {
@@ -112,16 +112,11 @@ export default function Sidebar() {
                   size="small"
                   sx={style.textBox}
                   value={tab.tabName}
-                  onChange={(e) => {
-                    SetTab((prevState) => ({
-                      ...prevState,
-                      tabName: e.target.value,
-                    }));
-                  }}
+                  onChange={(e)=>UpdateTabs(e,index)}
                 />
               </Grid>
               <Grid item xs={2} sx={style.DeleteIcon}>
-                <MdOutlineDelete onClick={DeleteTabs} />
+                <MdOutlineDelete onClick={()=>DeleteTabs(index)} />
               </Grid>
             </Grid>
           </Box>
