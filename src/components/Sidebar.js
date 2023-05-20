@@ -71,9 +71,18 @@ export default function Sidebar() {
       ...Tab,
       {
         id: uuid(),
-        tabName: "",
+        tabName: null,
       },
     ]);
+  };
+
+  const UpdateTabs = (e) => {
+    // SetTab((prevState) => (
+    //   {
+    //   ...prevState,
+    //   tabName: e.target.value
+    //   }
+    //   ));
   };
 
   //************* set data to local storage *************
@@ -81,6 +90,7 @@ export default function Sidebar() {
     localStorage.setItem("Tabs", JSON.stringify(Tab));
   }, [Tab]);
 
+  
   //************* delete Tabs function *************
   const DeleteTabs = (index) => {
     let newList = [...Tab];
@@ -103,7 +113,10 @@ export default function Sidebar() {
                   sx={style.textBox}
                   value={tab.tabName}
                   onChange={(e) => {
-                    SetTab([{ tabName: e.target.value }]);
+                    SetTab((prevState) => ({
+                      ...prevState,
+                      tabName: e.target.value,
+                    }));
                   }}
                 />
               </Grid>
