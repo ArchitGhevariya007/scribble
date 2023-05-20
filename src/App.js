@@ -1,8 +1,5 @@
 import "./App.css";
 import { createTheme, ThemeProvider, useMediaQuery } from "@mui/material";
-
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
 import Mobile from "./components/Mobile";
 import MainCotainer from "./components/MainContainer";
 
@@ -25,16 +22,10 @@ function App() {
   const isMobile = useMediaQuery("(max-width: 600px)");
   return (
     <>
-    {/* If screen size is small then it will call Mobile component */}
-      {isMobile ? (
-        <Mobile />
-      ) : (
-        <ThemeProvider theme={theme}>
-          <Navbar></Navbar>
-          <Sidebar></Sidebar>
-          <MainCotainer></MainCotainer>
-        </ThemeProvider>
-      )}
+      <ThemeProvider theme={theme}>
+        {/* If screen size is small then it will call Mobile component */}
+        {isMobile ? <Mobile /> : <MainCotainer></MainCotainer>}
+      </ThemeProvider>
     </>
   );
 }
