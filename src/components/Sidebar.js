@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Box, Stack, Grid, Button, TextField } from "@mui/material";
-import { v4 as uuid } from "uuid";
 import { IoIosMenu } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
+import TabContext from "../context/TabContext";
 
 export default function Sidebar() {
   //Style
@@ -55,53 +55,55 @@ export default function Sidebar() {
     },
   };
 
-  const getTabs = () => {
-    const LocalTodo = localStorage.getItem("Tabs");
-    if (LocalTodo === null) {
-      return [{ id: uuid(), tabName: "New" }];
-    } else {
-      return JSON.parse(LocalTodo);
-    }
-  };
+  const Tabs=useContext(TabContext);
 
-  const [Tab, SetTab] = useState(getTabs());
+  // const getTabs = () => {
+  //   const LocalTodo = localStorage.getItem("Tabs");
+  //   if (LocalTodo === null) {
+  //     return [{ id: uuid(), tabName: "New" }];
+  //   } else {
+  //     return JSON.parse(LocalTodo);
+  //   }
+  // };
 
-  //************* Add Tabs *************
-  const AddTab = () => {
-    SetTab([
-      ...Tab,
-      {
-        id: uuid(),
-        tabName: null,
-      },
-    ]);
-  };
+  // const [Tab, SetTab] = useState(getTabs());
 
-  //************* Update Tabs *************
-  const UpdateTabs = (e,index) => {
-    const updatedTabs = [...Tab];
-    updatedTabs[index].tabName = e.target.value;
-    SetTab(updatedTabs); 
-  };
+  // //************* Add Tabs *************
+  // const AddTab = () => {
+  //   SetTab([
+  //     ...Tab,
+  //     {
+  //       id: uuid(),
+  //       tabName: null,
+  //     },
+  //   ]);
+  // };
+
+  // //************* Update Tabs *************
+  // const UpdateTabs = (e,index) => {
+  //   const updatedTabs = [...Tab];
+  //   updatedTabs[index].tabName = e.target.value;
+  //   SetTab(updatedTabs); 
+  // };
 
 
-  //************* set data to local storage *************
-  useEffect(() => {
-    localStorage.setItem("Tabs", JSON.stringify(Tab));
-  }, [Tab]);
+  // //************* set data to local storage *************
+  // useEffect(() => {
+  //   localStorage.setItem("Tabs", JSON.stringify(Tab));
+  // }, [Tab]);
 
   
-  //************* delete Tabs function *************
-  const DeleteTabs = (index) => {
-    let newList = [...Tab];
-    newList.splice(index, 1);
-    SetTab([...newList]);
-  };
+  // //************* delete Tabs function *************
+  // const DeleteTabs = (index) => {
+  //   let newList = [...Tab];
+  //   newList.splice(index, 1);
+  //   SetTab([...newList]);
+  // };
 
   return (
     <>
       <Box sx={style.SideBarBody}>
-        {Tab.map((tab, index) => (
+        {Tabs.Tab.map((tab, index) => (
           <Box sx={style.SidebarItem} key={index}>
             <Grid container alignItems="center" spacing={1}>
               <Grid item xs={1.4} sx={style.iconsGrid}>
@@ -112,11 +114,11 @@ export default function Sidebar() {
                   size="small"
                   sx={style.textBox}
                   value={tab.tabName}
-                  onChange={(e)=>UpdateTabs(e,index)}
+                  onChange={(e)=>Tabs.UpdateTabs(e,index)}
                 />
               </Grid>
               <Grid item xs={2} sx={style.DeleteIcon}>
-                <MdOutlineDelete onClick={()=>DeleteTabs(index)} />
+                <MdOutlineDelete onClick={()=>Tabs.DeleteTabs(index)} />
               </Grid>
             </Grid>
           </Box>
@@ -127,7 +129,7 @@ export default function Sidebar() {
             variant="outlined"
             startIcon={<AiOutlinePlus />}
             sx={style.addButton}
-            onClick={AddTab}
+            onClick={Tabs.AddTab}
           >
             Add
           </Button>
