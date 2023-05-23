@@ -63,7 +63,7 @@ export default function Sidebar() {
     {/* onClick={()=>{Tabs.handleTabSelection(tab.selectedTabId)} */}
       <Box sx={style.SideBarBody}>
         {Tabs.Tab.map((tab, index) => (
-          <Box sx={style.SidebarItem} key={index}>
+          <Box sx={style.SidebarItem} key={index} onClick={() => Tabs.handleTabSelection(Tabs.Tab.Tabid)}>
             <Grid container alignItems="center" spacing={1}>
               <Grid item xs={1.4} sx={style.iconsGrid}>
                 <IoIosMenu />

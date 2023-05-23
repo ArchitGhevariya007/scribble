@@ -75,6 +75,9 @@ export default function Todos() {
     //************* Using Context *************
     const Tabs=useContext(TabContextCreate);
 
+    const selectedTab = Tabs.Tab.find((tab) => tab.Tabid === Tabs.selectedTabId);
+
+
   //************* Add button handling *************
   const AddTodo = (e) => {
     if (Tabs.TodoText !== "") {
@@ -143,7 +146,7 @@ export default function Todos() {
       {/* Task List */}
       <Box sx={style.todolist}>
         {Tabs.AddTodoText != null
-          ? Tabs.AddTodoText.map((data, key) => (
+          ?selectedTab&& Tabs.AddTodoText.map((data, key) => (
               <Container maxWidth="lg" key={key} sx={style.todoContainer}>
                 <Stack
                   direction="row"
