@@ -3,7 +3,7 @@ import { Box, Stack, Grid, Button, TextField } from "@mui/material";
 import { IoIosMenu } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
-import TabContext from "../context/TabContext";
+import {TabContextCreate} from "../context/TabContext";
 
 export default function Sidebar() {
   //Style
@@ -55,53 +55,12 @@ export default function Sidebar() {
     },
   };
 
-  const Tabs=useContext(TabContext);
-
-  // const getTabs = () => {
-  //   const LocalTodo = localStorage.getItem("Tabs");
-  //   if (LocalTodo === null) {
-  //     return [{ id: uuid(), tabName: "New" }];
-  //   } else {
-  //     return JSON.parse(LocalTodo);
-  //   }
-  // };
-
-  // const [Tab, SetTab] = useState(getTabs());
-
-  // //************* Add Tabs *************
-  // const AddTab = () => {
-  //   SetTab([
-  //     ...Tab,
-  //     {
-  //       id: uuid(),
-  //       tabName: null,
-  //     },
-  //   ]);
-  // };
-
-  // //************* Update Tabs *************
-  // const UpdateTabs = (e,index) => {
-  //   const updatedTabs = [...Tab];
-  //   updatedTabs[index].tabName = e.target.value;
-  //   SetTab(updatedTabs); 
-  // };
-
-
-  // //************* set data to local storage *************
-  // useEffect(() => {
-  //   localStorage.setItem("Tabs", JSON.stringify(Tab));
-  // }, [Tab]);
-
-  
-  // //************* delete Tabs function *************
-  // const DeleteTabs = (index) => {
-  //   let newList = [...Tab];
-  //   newList.splice(index, 1);
-  //   SetTab([...newList]);
-  // };
+  //************* Using Context *************
+  const Tabs=useContext(TabContextCreate);
 
   return (
     <>
+    {/* onClick={()=>{Tabs.handleTabSelection(tab.selectedTabId)} */}
       <Box sx={style.SideBarBody}>
         {Tabs.Tab.map((tab, index) => (
           <Box sx={style.SidebarItem} key={index}>
@@ -113,7 +72,7 @@ export default function Sidebar() {
                 <TextField
                   size="small"
                   sx={style.textBox}
-                  value={tab.tabName}
+                  value={tab.TabName}
                   onChange={(e)=>Tabs.UpdateTabs(e,index)}
                 />
               </Grid>

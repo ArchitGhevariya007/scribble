@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect,useContext } from "react";
 import {
   Box,
   TextField,
@@ -11,6 +11,7 @@ import {
 import { v4 as uuid } from "uuid";
 //import { RxPencil1 } from "react-icons/rx";
 import { MdOutlineDelete } from "react-icons/md";
+import {TabContextCreate} from "../context/TabContext";
 
 export default function Todos() {
   //Css
@@ -58,54 +59,59 @@ export default function Todos() {
 
   //getting data from local storage and adding to state
   //if we don't get data then data will be lost after refreshing the page
-  const getTodos = () => {
-    const LocalTodo = localStorage.getItem("Tasks");
-    if (LocalTodo === null) {
-      return [];
-    } else {
-      return JSON.parse(LocalTodo);
-    }
-  };
+  // const getTodos = () => {
+  //   const LocalTodo = localStorage.getItem("Tasks");
+  //   if (LocalTodo === null) {
+  //     return [];
+  //   } else {
+  //     return JSON.parse(LocalTodo);
+  //   }
+  // };
 
   //************* Add todo text *************
-  const [TodoText, SetTodoText] = useState("");
-  const [AddTodoText, SetAddTodoText] = useState(getTodos());
+  // const [TodoText, SetTodoText] = useState("");
+  // const [AddTodoText, SetAddTodoText] = useState(getTodos());
+
+    //************* Using Context *************
+    const Tabs=useContext(TabContextCreate);
 
   //************* Add button handling *************
   const AddTodo = (e) => {
-    if (TodoText !== "") {
-      SetAddTodoText([
-        ...AddTodoText,
+    if (Tabs.TodoText !== "") {
+      Tabs.SetAddTodoText([
+        ...Tabs.AddTodoText,
         {
-          id: uuid(),
-          task: TodoText,
+          Todoid: uuid(),
+          TabId:Tabs.selectedTabId,
+          task: Tabs.TodoText,
           isSelected: false,
         },
       ]);
-      SetTodoText("");
+      Tabs.SetTodoText("");
       e.preventDefault();
+      console.log(Tabs.selectedTabId)
+
     }
   };
 
   //************* set data to local storage *************
   useEffect(() => {
-    localStorage.setItem("Tasks", JSON.stringify(AddTodoText));
-  }, [AddTodoText]);
+    localStorage.setItem("Tasks", JSON.stringify(Tabs.AddTodoText));
+  }, [Tabs.AddTodoText]);
 
   //************* delete todos function *************
   const DeleteTask = (index) => {
-    let newList = [...AddTodoText];
+    let newList = [...Tabs.AddTodoText];
     newList.splice(index, 1);
-    SetAddTodoText([...newList]);
+    Tabs.SetAddTodoText([...newList]);
   };
 
   //************* handle Checkbox Change *************
-
-  const handleCheckboxChange = (event, index, id) => {
+  const handleCheckboxChange = (event, index, Todoid) => {
     //update checkbox status
-    SetAddTodoText(
-      AddTodoText.map((item) =>
-        item.id === id ? { ...item, isSelected: event.target.checked } : item
+    Tabs.SetAddTodoText(
+      Tabs.AddTodoText.map((item) =>
+        item.Todoid === Todoid ? { ...item, isSelected: event.target.checked } : item
       )
     );
   };
@@ -118,9 +124,9 @@ export default function Todos() {
           placeholder="Enter Task"
           sx={style.addTextField}
           fullWidth
-          value={TodoText}
+          value={Tabs.TodoText}
           onChange={(e) => {
-            SetTodoText(e.target.value);
+            Tabs.SetTodoText(e.target.value);
           }}
           InputProps={{
             endAdornment: (
@@ -136,8 +142,8 @@ export default function Todos() {
 
       {/* Task List */}
       <Box sx={style.todolist}>
-        {AddTodoText != null
-          ? AddTodoText.map((data, key) => (
+        {Tabs.AddTodoText != null
+          ? Tabs.AddTodoText.map((data, key) => (
               <Container maxWidth="lg" key={key} sx={style.todoContainer}>
                 <Stack
                   direction="row"
@@ -162,7 +168,7 @@ export default function Todos() {
                         sx={style.CheckBox}
                         color="primary"
                         onChange={(event) =>
-                          handleCheckboxChange(event, key, data.id)
+                          handleCheckboxChange(event, key, data.Todoid)
                         }
                         checked={data.isSelected}
                       />
