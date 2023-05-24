@@ -92,7 +92,7 @@ export default function Todos() {
       ]);
       Tabs.SetTodoText("");
       e.preventDefault();
-      console.log(Tabs.selectedTabId)
+      console.log(selectedTab.Tabid)
 
     }
   };
@@ -144,9 +144,10 @@ export default function Todos() {
       </Box>
 
       {/* Task List */}
+      {/* selectedTab.Tabid===Tabs.AddTodoText.Tabid */}
       <Box sx={style.todolist}>
         {Tabs.AddTodoText != null
-          ?selectedTab&& Tabs.AddTodoText.map((data, key) => (
+          ? Tabs.AddTodoText.map((data, key) => (
               <Container maxWidth="lg" key={key} sx={style.todoContainer}>
                 <Stack
                   direction="row"

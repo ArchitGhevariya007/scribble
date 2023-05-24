@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 export const TabContextCreate = createContext();
 
 export default function TabContext(props) {
+
   //************* Getting Tabs from localStorage *************
   const getTabs = () => {
     const LocalTodo = localStorage.getItem("Tabs");
@@ -37,7 +38,7 @@ export default function TabContext(props) {
     SetTab(updatedTabs);
   };
 
-  //************* set data to local storage *************
+  //************* set Tabs data to local storage *************
   useEffect(() => {
     localStorage.setItem("Tabs", JSON.stringify(Tab));
   }, [Tab]);
@@ -49,14 +50,15 @@ export default function TabContext(props) {
     SetTab([...newList]);
   };
 
+  //************* Handle Tab Selection *************
   const handleTabSelection = (tabId) => {
     setSelectedTabId(tabId);
   };
 
-
+  
   //Todos
 
-    //getting data from local storage and adding to state
+  //getting data from local storage and adding to state
   //if we don't get data then data will be lost after refreshing the page
   const getTodos = () => {
     const LocalTodo = localStorage.getItem("Tasks");
@@ -84,7 +86,7 @@ export default function TabContext(props) {
           TodoText,
           SetTodoText,
           AddTodoText,
-          SetAddTodoText
+          SetAddTodoText,
         }}
       >
         {props.children}
