@@ -1,4 +1,4 @@
-import React, { useEffect,useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import {
   Box,
   TextField,
@@ -11,7 +11,7 @@ import {
 import { v4 as uuid } from "uuid";
 //import { RxPencil1 } from "react-icons/rx";
 import { MdOutlineDelete } from "react-icons/md";
-import {TabContextCreate} from "../context/TabContext";
+import { TabContextCreate } from "../context/TabContext";
 
 export default function Todos() {
   //Css
@@ -72,11 +72,10 @@ export default function Todos() {
   // const [TodoText, SetTodoText] = useState("");
   // const [AddTodoText, SetAddTodoText] = useState(getTodos());
 
-    //************* Using Context *************
-    const Tabs=useContext(TabContextCreate);
+  //************* Using Context *************
+  const Tabs = useContext(TabContextCreate);
 
-    const selectedTab = Tabs.Tab.find((tab) => tab.Tabid === Tabs.selectedTabId);
-
+  const selectedTab = Tabs.Tab.find((tab) => tab.Tabid === Tabs.selectedTabId);
 
   //************* Add button handling *************
   const AddTodo = (e) => {
@@ -85,15 +84,16 @@ export default function Todos() {
         ...Tabs.AddTodoText,
         {
           Todoid: uuid(),
-          TabId:Tabs.selectedTabId,
+          TabId: Tabs.selectedTabId,
           task: Tabs.TodoText,
           isSelected: false,
         },
       ]);
       Tabs.SetTodoText("");
       e.preventDefault();
-      console.log(selectedTab.Tabid)
 
+      // console.log(selectedTab.Tabid);
+      // console.log(Tabs.AddTodoText[0].TabId);
     }
   };
 
@@ -114,7 +114,9 @@ export default function Todos() {
     //update checkbox status
     Tabs.SetAddTodoText(
       Tabs.AddTodoText.map((item) =>
-        item.Todoid === Todoid ? { ...item, isSelected: event.target.checked } : item
+        item.Todoid === Todoid
+          ? { ...item, isSelected: event.target.checked }
+          : item
       )
     );
   };
@@ -144,55 +146,64 @@ export default function Todos() {
       </Box>
 
       {/* Task List */}
-      {/* selectedTab.Tabid===Tabs.AddTodoText.Tabid */}
+      {/* && selectedTab.Tabid===Tabs.AddTodoText.Tabid */}
       <Box sx={style.todolist}>
         {Tabs.AddTodoText != null
-          ? Tabs.AddTodoText.map((data, key) => (
-              <Container maxWidth="lg" key={key} sx={style.todoContainer}>
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  spacing={1}
-                >
-                  <FormControlLabel
-                    label={
-                      <span
-                        style={{
-                          textDecoration: data.isSelected
-                            ? "line-through"
-                            : "none",
-                        }}
-                      >
-                        {data.task}
-                      </span>
-                    }
-                    control={
-                      <Checkbox
-                        sx={style.CheckBox}
-                        color="primary"
-                        onChange={(event) =>
-                          handleCheckboxChange(event, key, data.Todoid)
-                        }
-                        checked={data.isSelected}
-                      />
-                    }
-                  />
+          ? Tabs.AddTodoText.map((data, key) => {
+              // console.log(data.TabId +"   "+ selectedTab.Tabid);
 
-                  <Box>
-                    {/* <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} /> */}
-                    <MdOutlineDelete
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => {
-                        DeleteTask(key);
-                      }}
-                    />
-                  </Box>
-                </Stack>
-              </Container>
-            ))
+              if (selectedTab && data.TabId === selectedTab.Tabid ) {
+                return (
+                  <Container maxWidth="lg" key={key} sx={style.todoContainer}>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      spacing={1}
+                    >
+                      <FormControlLabel
+                        label={
+                          <span
+                            style={{
+                              textDecoration: data.isSelected
+                                ? "line-through"
+                                : "none",
+                            }}
+                          >
+                            {data.task}
+                          </span>
+                        }
+                        control={
+                          <Checkbox
+                            sx={style.CheckBox}
+                            color="primary"
+                            onChange={(event) =>
+                              handleCheckboxChange(event, key, data.Todoid)
+                            }
+                            checked={data.isSelected}
+                          />
+                        }
+                      />
+
+                      <Box>
+                        {/* <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} /> */}
+                        <MdOutlineDelete
+                          style={{
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            DeleteTask(key);
+                          }}
+                        />
+                      </Box>
+                    </Stack>
+                  </Container>
+                );
+              }else{
+                return(<>
+                </>)
+              }
+            })
           : ""}
       </Box>
     </>
