@@ -30,7 +30,6 @@ export default function Todos() {
       "& fieldset": { border: "none" },
     },
     todolist: {
-      //backgroundColor: "#2d3036",
       padding: 1,
       mt: 2,
       borderRadius: 2,
@@ -57,21 +56,6 @@ export default function Todos() {
     },
   };
 
-  //getting data from local storage and adding to state
-  //if we don't get data then data will be lost after refreshing the page
-  // const getTodos = () => {
-  //   const LocalTodo = localStorage.getItem("Tasks");
-  //   if (LocalTodo === null) {
-  //     return [];
-  //   } else {
-  //     return JSON.parse(LocalTodo);
-  //   }
-  // };
-
-  //************* Add todo text *************
-  // const [TodoText, SetTodoText] = useState("");
-  // const [AddTodoText, SetAddTodoText] = useState(getTodos());
-
   //************* Using Context *************
   const Tabs = useContext(TabContextCreate);
 
@@ -91,9 +75,6 @@ export default function Todos() {
       ]);
       Tabs.SetTodoText("");
       e.preventDefault();
-
-      // console.log(selectedTab.Tabid);
-      // console.log(Tabs.AddTodoText[0].TabId);
     }
   };
 
@@ -146,13 +127,10 @@ export default function Todos() {
       </Box>
 
       {/* Task List */}
-      {/* && selectedTab.Tabid===Tabs.AddTodoText.Tabid */}
       <Box sx={style.todolist}>
         {Tabs.AddTodoText != null
           ? Tabs.AddTodoText.map((data, key) => {
-              // console.log(data.TabId +"   "+ selectedTab.Tabid);
-
-              if (selectedTab && data.TabId === selectedTab.Tabid ) {
+              if (selectedTab && data.TabId === selectedTab.Tabid) {
                 return (
                   <Container maxWidth="lg" key={key} sx={style.todoContainer}>
                     <Stack
@@ -199,9 +177,8 @@ export default function Todos() {
                     </Stack>
                   </Container>
                 );
-              }else{
-                return(<>
-                </>)
+              } else {
+                return null;
               }
             })
           : ""}
@@ -209,3 +186,5 @@ export default function Todos() {
     </>
   );
 }
+
+

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box } from "@mui/material";
 import NoteComponent from "./NoteComponent";
 import { CiSquarePlus } from "react-icons/ci";
 import { v4 as uuid } from "uuid";
+import { TabContextCreate } from "../context/TabContext";
 
 //Style
 const style = {
@@ -55,10 +56,16 @@ export default function Notes() {
   //Notes State
   const [Note, SetNote] = useState(getNotes());
 
+  //************* Using Context *************
+  const Tabs = useContext(TabContextCreate);
+
+  const selectedTab = Tabs.Tab.find((tab) => tab.Tabid === Tabs.selectedTabId);
+
   //Add Note component
   const AddComponent = () => {
     const newNote = {
-      Id: uuid(),
+      NotesId: uuid(),
+      TabId: Tabs.selectedTabId,
       Title: "",
       Description: "",
       Date: today,
@@ -88,19 +95,25 @@ export default function Notes() {
   return (
     <>
       <Box sx={style.MainContainer}>
-        {Note.map((notes, index) => (
-          // Note Component
-          <NoteComponent
-            key={index}
-            index={index}
-            id={notes.id}
-            title={notes.Title}
-            description={notes.Description}
-            Date={notes.Date}
-            handleNoteChange={handleNoteChange}
-            DeleteNote={DeleteNote}
-          />
-        ))}
+        {Note.map((notes, index) => {
+          if (selectedTab && notes.TabId === selectedTab.Tabid) {
+            return (
+              // Note Component
+              <NoteComponent
+                key={index}
+                index={index}
+                id={notes.NotesId}
+                title={notes.Title}
+                description={notes.Description}
+                Date={notes.Date}
+                handleNoteChange={handleNoteChange}
+                DeleteNote={DeleteNote}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
 
         {/* Add new Note */}
         <Box

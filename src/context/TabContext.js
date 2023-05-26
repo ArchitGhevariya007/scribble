@@ -5,7 +5,24 @@ import { v4 as uuid } from "uuid";
 export const TabContextCreate = createContext();
 
 export default function TabContext(props) {
+  //Todos
 
+  //getting data from local storage and adding to state
+  //if we don't get data then data will be lost after refreshing the page
+  const getTodos = () => {
+    const LocalTodo = localStorage.getItem("Tasks");
+    if (LocalTodo === null) {
+      return [];
+    } else {
+      return JSON.parse(LocalTodo);
+    }
+  };
+
+  //************* Add todo text *************
+  const [TodoText, SetTodoText] = useState("");
+  const [AddTodoText, SetAddTodoText] = useState(getTodos());
+
+  //Tabs
   //************* Getting Tabs from localStorage *************
   const getTabs = () => {
     const LocalTodo = localStorage.getItem("Tabs");
@@ -44,34 +61,32 @@ export default function TabContext(props) {
   }, [Tab]);
 
   //************* delete Tabs function *************
-  const DeleteTabs = (index) => {
+  const DeleteTabs = (index,Notes, setNotes) => {
+    const deletedTabId = Tab[index].Tabid;
     let newList = [...Tab];
     newList.splice(index, 1);
     SetTab([...newList]);
+
+    // Remove the associated data from the AddTodoText array
+    const updatedTodoText = AddTodoText.filter(
+      (todo) => todo.TabId !== deletedTabId
+    );
+    SetAddTodoText(updatedTodoText);
+
+    // Remove the associated notes
+    const updatedNotes = Notes.filter((note) => note.TabId !== deletedTabId);
+    setNotes(updatedNotes);
+
+    // If the deleted tab was the currently selected tab, clear the selectedTabId
+    if (selectedTabId === deletedTabId) {
+      setSelectedTabId(null);
+    }
   };
 
   //************* Handle Tab Selection *************
   const handleTabSelection = (tabId) => {
     setSelectedTabId(tabId);
   };
-
-  
-  //Todos
-
-  //getting data from local storage and adding to state
-  //if we don't get data then data will be lost after refreshing the page
-  const getTodos = () => {
-    const LocalTodo = localStorage.getItem("Tasks");
-    if (LocalTodo === null) {
-      return [];
-    } else {
-      return JSON.parse(LocalTodo);
-    }
-  };
-
-  //************* Add todo text *************
-  const [TodoText, SetTodoText] = useState("");
-  const [AddTodoText, SetAddTodoText] = useState(getTodos());
 
   return (
     <>
