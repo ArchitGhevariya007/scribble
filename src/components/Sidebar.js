@@ -53,6 +53,9 @@ export default function Sidebar() {
       mb: 1.1,
       cursor:"pointer"
     },
+    "&.selected": {
+      backgroundColor: "#353940",
+    },
   };
 
   //************* Using Context *************
