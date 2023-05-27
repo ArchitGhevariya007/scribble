@@ -46,15 +46,23 @@ export default function Sidebar() {
       cursor: "pointer",
     },
     SidebarItem: {
-      backgroundColor: "#22262b",
+      //backgroundColor: "#22262b",
       borderRadius: 1,
       padding: 0.5,
       alignItems: "center",
       mb: 1.1,
       cursor: "pointer",
+      transition: "background-color 0.3s",
+      "&:hover": {
+        backgroundColor: "#353940",
+      },
     },
-    "&.selected": {
-      backgroundColor: "#353940",
+    selectedTab: {
+      transition: "background-color 0.8s",
+      backgroundColor: "#22262b",
+      "&:hover": {
+        backgroundColor: "#22262b",
+      },
     },
   };
 
@@ -66,7 +74,10 @@ export default function Sidebar() {
       <Box sx={style.SideBarBody}>
         {Tabs.Tab.map((tab, index) => (
           <Box
-            sx={style.SidebarItem}
+            sx={{
+              ...style.SidebarItem,
+              ...(tab.Tabid === Tabs.selectedTabId && style.selectedTab),
+            }}
             key={index}
             onClick={() => Tabs.handleTabSelection(tab.Tabid)}
           >

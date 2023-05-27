@@ -5,7 +5,8 @@ import { v4 as uuid } from "uuid";
 export const TabContextCreate = createContext();
 
 export default function TabContext(props) {
-  //Todos
+
+  //**************************************************** Todos ****************************************************
 
   //getting data from local storage and adding to state
   //if we don't get data then data will be lost after refreshing the page
@@ -22,7 +23,24 @@ export default function TabContext(props) {
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
 
-  //Tabs
+  //**************************************************** Notes ****************************************************
+
+    //************* get data from local storage *************
+    const getNotes = () => {
+      const LocalNotes = localStorage.getItem("Notes");
+      if (LocalNotes === null) {
+        return [];
+      } else {
+        return JSON.parse(LocalNotes);
+      }
+    };
+  
+    //Notes State
+    const [Note, SetNote] = useState(getNotes());
+
+
+  //**************************************************** Tabs ****************************************************
+
   //************* Getting Tabs from localStorage *************
   const getTabs = () => {
     const LocalTodo = localStorage.getItem("Tabs");
@@ -61,7 +79,7 @@ export default function TabContext(props) {
   }, [Tab]);
 
   //************* delete Tabs function *************
-  const DeleteTabs = (index,Notes, setNotes) => {
+  const DeleteTabs = (index) => {
     const deletedTabId = Tab[index].Tabid;
     let newList = [...Tab];
     newList.splice(index, 1);
@@ -74,8 +92,8 @@ export default function TabContext(props) {
     SetAddTodoText(updatedTodoText);
 
     // Remove the associated notes
-    const updatedNotes = Notes.filter((note) => note.TabId !== deletedTabId);
-    setNotes(updatedNotes);
+    const updatedNotes = Note.filter((note) => note.TabId !== deletedTabId);
+    SetNote(updatedNotes);
 
     // If the deleted tab was the currently selected tab, clear the selectedTabId
     if (selectedTabId === deletedTabId) {
@@ -102,6 +120,8 @@ export default function TabContext(props) {
           SetTodoText,
           AddTodoText,
           SetAddTodoText,
+          Note,
+          SetNote
         }}
       >
         {props.children}

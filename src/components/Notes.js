@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Box } from "@mui/material";
 import NoteComponent from "./NoteComponent";
 import { CiSquarePlus } from "react-icons/ci";
@@ -43,18 +43,6 @@ export default function Notes() {
     day: "2-digit",
   });
 
-  //************* get data from local storage *************
-  const getNotes = () => {
-    const LocalNotes = localStorage.getItem("Notes");
-    if (LocalNotes === null) {
-      return [];
-    } else {
-      return JSON.parse(LocalNotes);
-    }
-  };
-
-  //Notes State
-  const [Note, SetNote] = useState(getNotes());
 
   //************* Using Context *************
   const Tabs = useContext(TabContextCreate);
@@ -70,32 +58,32 @@ export default function Notes() {
       Description: "",
       Date: today,
     };
-    SetNote([...Note, newNote]);
+    Tabs.SetNote([...Tabs.Note, newNote]);
   };
 
   //Note Change function
   const handleNoteChange = (index, field, value) => {
-    const updatedNotes = [...Note];
+    const updatedNotes = [...Tabs.Note];
     updatedNotes[index][field] = value;
-    SetNote(updatedNotes);
+    Tabs.SetNote(updatedNotes);
   };
 
   //************* set data to local storage *************
   useEffect(() => {
-    localStorage.setItem("Notes", JSON.stringify(Note));
-  }, [Note]);
+    localStorage.setItem("Notes", JSON.stringify(Tabs.Note));
+  }, [Tabs.Note]);
 
   //************* delete Notes function *************
   const DeleteNote = (index) => {
-    let newList = [...Note];
+    let newList = [...Tabs.Note];
     newList.splice(index, 1);
-    SetNote([...newList]);
+    Tabs.SetNote([...newList]);
   };
 
   return (
     <>
       <Box sx={style.MainContainer}>
-        {Note.map((notes, index) => {
+        {Tabs.Note.map((notes, index) => {
           if (selectedTab && notes.TabId === selectedTab.Tabid) {
             return (
               // Note Component
