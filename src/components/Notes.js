@@ -36,7 +36,7 @@ const style = {
   },
 };
 
-export default function Notes() {
+export default function Notes(props) {
   //Clock
   var today = new Date().toLocaleDateString(undefined, {
     month: "long",
@@ -80,10 +80,16 @@ export default function Notes() {
     Tabs.SetNote([...newList]);
   };
 
+    // Filter the notes based on the search text
+    const filteredNotes = Tabs.Note.filter((note) =>
+    note.Title.toLowerCase().includes(props.searchText.toLowerCase()) ||
+    note.Description.toLowerCase().includes(props.searchText.toLowerCase())
+  );
+
   return (
     <>
       <Box sx={style.MainContainer}>
-        {Tabs.Note.map((notes, index) => {
+        {filteredNotes.map((notes, index) => {
           if (selectedTab && notes.TabId === selectedTab.Tabid) {
             return (
               // Note Component

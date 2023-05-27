@@ -9,8 +9,9 @@ import Notes from "./Notes";
 // Main function
 export default function ContentTab() {
   const [value, setValue] = useState("1");
+  const [SearchText,SetSearchText]=useState("");
 
-  const handleChange = (event, newValue) => {
+  const handleChange = ( newValue) => {
     setValue(newValue);
   };
 
@@ -63,6 +64,7 @@ export default function ContentTab() {
               type="text"
               placeholder="Search Task"
               style={style.SearchBox}
+              onChange={(e)=>{SetSearchText(e.target.value)}}
             />
           </Grid>
         </Grid>
@@ -81,11 +83,11 @@ export default function ContentTab() {
 
           {/* Tab Content */}
           <TabPanel value="1">
-            <Todos />
+            <Todos searchText={SearchText}/>
           </TabPanel>
           <TabPanel value="2">
-            <Notes />
-          </TabPanel>
+            <Notes searchText={SearchText} />
+          </TabPanel >
           {/* <TabPanel value="3">
             <Links />
           </TabPanel> */}

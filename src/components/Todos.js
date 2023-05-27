@@ -13,7 +13,7 @@ import { v4 as uuid } from "uuid";
 import { MdOutlineDelete } from "react-icons/md";
 import { TabContextCreate } from "../context/TabContext";
 
-export default function Todos() {
+export default function Todos(props) {
   //Css
   const style = {
     addBox: {
@@ -102,6 +102,11 @@ export default function Todos() {
     );
   };
 
+  // Filter the todos based on the search text
+  const filteredTodos = Tabs.AddTodoText.filter((todo) =>
+    todo.task.toLowerCase().includes(props.searchText.toLowerCase())
+  );
+
   return (
     <>
       {/* Add Todo Text Box */}
@@ -129,8 +134,8 @@ export default function Todos() {
       {/* Task List */}
       <Box sx={style.todolist}>
         {Tabs.AddTodoText != null
-          ? Tabs.AddTodoText.map((data, key) => {
-              if (selectedTab && data.TabId === selectedTab.Tabid) {
+          ? filteredTodos.map((data, key) => {
+              if (selectedTab && data.TabId === selectedTab.Tabid ) {
                 return (
                   <Container maxWidth="lg" key={key} sx={style.todoContainer}>
                     <Stack
@@ -186,5 +191,3 @@ export default function Todos() {
     </>
   );
 }
-
-
