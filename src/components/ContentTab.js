@@ -4,6 +4,8 @@ import { TabPanel, TabContext, TabList } from "@mui/lab";
 import { useState } from "react";
 import Todos from "./Todos";
 import Notes from "./Notes";
+import Passwords from "./Passwords";
+
 // import Links from "./Links";
 
 // Main function
@@ -77,7 +79,7 @@ export default function ContentTab() {
             <TabList onChange={handleChange}>
               <Tab label="Todos" value="1" disableRipple sx={style.TabColor} />
               <Tab label="Notes" value="2" disableRipple sx={style.TabColor} />
-              {/* <Tab label="Links " value="3" disableRipple sx={style.TabColor} /> */}
+              <Tab label="Passwords " value="3" disableRipple sx={style.TabColor} />
             </TabList>
           </Box>
 
@@ -88,9 +90,9 @@ export default function ContentTab() {
           <TabPanel value="2">
             <Notes searchText={SearchText} />
           </TabPanel >
-          {/* <TabPanel value="3">
-            <Links />
-          </TabPanel> */}
+          <TabPanel value="3">
+            <Passwords/>
+          </TabPanel>
         </TabContext>
       </Box>
     </Box>
