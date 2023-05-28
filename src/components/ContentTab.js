@@ -11,7 +11,7 @@ export default function ContentTab() {
   const [value, setValue] = useState("1");
   const [SearchText,SetSearchText]=useState("");
 
-  const handleChange = ( newValue) => {
+  const handleChange = (event,newValue) => {
     setValue(newValue);
   };
 
