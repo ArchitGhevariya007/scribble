@@ -22,20 +22,20 @@ export default function Passwords() {
     <>
       <Box sx={style.MainContainer}>
         <Grid container spacing={3} alignItems="center">
-          <Grid item xs={4}>
+          <Grid item xs="auto">
             <TextField
               placeholder="Enter Label"
               fullWidth
               sx={style.TextField}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs="auto">
             <TextField placeholder="Username" fullWidth sx={style.TextField} />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs="auto">
             <TextField placeholder="Password" fullWidth sx={style.TextField} />
           </Grid>
-          <Grid item xs>
+          <Grid item xs="auto">
             <Button variant="contained" size="large">
               Add
             </Button>
