@@ -35,7 +35,7 @@ export default function ContentTab() {
       backgroundColor: "transparent",
       padding: 10,
       border: "2px #2d3036  solid",
-      borderRadius: 3,
+      borderRadius: 5,
       color: "rgb(232, 232, 232)",
     },
     TabColor: {
@@ -64,7 +64,7 @@ export default function ContentTab() {
           <Grid item xs={1}>
             <input
               type="text"
-              placeholder="Search Task"
+              placeholder="Search"
               style={style.SearchBox}
               onChange={(e)=>{SetSearchText(e.target.value)}}
             />

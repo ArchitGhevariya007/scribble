@@ -39,6 +39,23 @@ export default function TabContext(props) {
     const [Note, SetNote] = useState(getNotes());
 
 
+  //**************************************************** Passwords ****************************************************
+
+  //************* get data from local storage *************
+  const getPassword = () => {
+    const LocalNotes = localStorage.getItem("Passwords");
+    if (LocalNotes === null) {
+      return [];
+    } else {
+      return JSON.parse(LocalNotes);
+    }
+  };
+
+  const [Passwords,SetPasswords]=useState(getPassword());
+
+
+
+
   //**************************************************** Tabs ****************************************************
 
   //************* Getting Tabs from localStorage *************
@@ -121,7 +138,9 @@ export default function TabContext(props) {
           AddTodoText,
           SetAddTodoText,
           Note,
-          SetNote
+          SetNote,
+          Passwords,
+          SetPasswords
         }}
       >
         {props.children}
