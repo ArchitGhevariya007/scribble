@@ -1,16 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Box, Grid, TextField, Button, Container, Stack } from "@mui/material";
+import { Box, Grid, TextField, Button, Container } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { TabContextCreate } from "../context/TabContext";
 import { MdOutlineDelete } from "react-icons/md";
 
 export default function Passwords() {
   const style = {
-    MainContainer: {
-      display: "flex",
-      flexWrap: "wrap",
-      p: 1,
-    },
     TextField: {
       backgroundColor: "transparent",
       border: "2px #2d3036  solid",
@@ -32,15 +27,20 @@ export default function Passwords() {
       backgroundColor: "#2d3036",
       mt: 1,
       mb: 1,
-      padding: 0.5,
+      padding: 0.1,
       borderRadius: 1,
-      width: "100%",
       "&:hover": {
         backgroundColor: "#353940",
         cursor: "pointer",
         transition: "transform .3s ease-out",
         transform: "scale(1.01)",
       },
+    },
+    truncate: {
+      maxWidth: "150px",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
   };
 
@@ -69,9 +69,6 @@ export default function Passwords() {
           Password: Password,
         },
       ]);
-      // console.log(Label);
-      // console.log(UserName);
-      // console.log(Password);
     }
     SetLabel("");
     SetUserName("");
@@ -93,87 +90,95 @@ export default function Passwords() {
 
   return (
     <>
-      <Box sx={style.MainContainer}>
-        <form onSubmit={AddPassword}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} sm={6} md={3}>
-              <TextField
-                placeholder="Enter Label"
-                fullWidth
-                sx={style.TextField}
-                onChange={(e) => {
-                  SetLabel(e.target.value);
-                }}
-                value={Label}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                placeholder="Username"
-                fullWidth
-                sx={style.TextField}
-                onChange={(e) => {
-                  SetUserName(e.target.value);
-                }}
-                value={UserName}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                placeholder="Password"
-                fullWidth
-                sx={style.TextField}
-                onChange={(e) => {
-                  SetPassword(e.target.value);
-                }}
-                value={Password}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={1}>
-              <Button variant="contained" size="large" type="submit">
-                Add
-              </Button>
-            </Grid>
+      <form onSubmit={AddPassword}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              placeholder="Enter Label"
+              fullWidth
+              sx={style.TextField}
+              onChange={(e) => {
+                SetLabel(e.target.value);
+              }}
+              value={Label}
+            />
           </Grid>
-        </form>
 
-        {/* Task List */}
-        <Box sx={style.psdlist}>
-          {Tabs.Passwords.length > 0 &&
-            Tabs.Passwords.map((data, key) => {
-              if (selectedTab && data.TabId === selectedTab.TabId) {
-                return (
-                  <Container maxWidth="lg" key={key} sx={style.psdContainer}>
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      spacing={1}
-                    >
-                      <p>{data.Label}</p>
-                      <p>{data.UserName}</p>
-                      <p>{data.Password}</p>
-                      <Box>
-                        <MdOutlineDelete
-                          style={{
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            DeleteTask(key);
-                          }}
-                        />
-                      </Box>
-                    </Stack>
-                  </Container>
-                );
-              } else {
-                return null;
-              }
-            })}
-        </Box>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              placeholder="Username"
+              fullWidth
+              sx={style.TextField}
+              onChange={(e) => {
+                SetUserName(e.target.value);
+              }}
+              value={UserName}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              placeholder="Password"
+              fullWidth
+              sx={style.TextField}
+              onChange={(e) => {
+                SetPassword(e.target.value);
+              }}
+              value={Password}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={1}>
+            <Button variant="contained" size="large" type="submit">
+              Add
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+
+      {/* Task List */}
+      <Box sx={style.psdlist}>
+        {Tabs.Passwords.length > 0 &&
+          Tabs.Passwords.map((data, key) => {
+            if (selectedTab && data.TabId === selectedTab.TabId) {
+              return (
+                <Container maxWidth="lg" key={key} sx={style.psdContainer}>
+                  <Box
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Grid container spacing={1} alignItems="center">
+                      <Grid item xs={3}>
+                        <p style={style.truncate}>{data.Label}</p>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <p style={style.truncate}>{data.UserName}</p>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <p style={style.truncate}>{data.Password}</p>
+                      </Grid>
+                    </Grid>
+
+                    <Box>
+                      <MdOutlineDelete
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          DeleteTask(key);
+                        }}
+                      />
+                    </Box>
+                  </Box>
+                </Container>
+              );
+            } else {
+              return null;
+            }
+          })}
       </Box>
     </>
   );
