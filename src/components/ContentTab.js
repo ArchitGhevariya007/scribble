@@ -37,6 +37,7 @@ export default function ContentTab() {
       border: "2px #2d3036  solid",
       borderRadius: 5,
       color: "rgb(232, 232, 232)",
+      outline: "none",
     },
     TabColor: {
       color: "rgb(232, 232, 232)",

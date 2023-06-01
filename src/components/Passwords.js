@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Box, Grid, TextField, Button, Container } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { TabContextCreate } from "../context/TabContext";
-import { MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete, MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 export default function Passwords() {
   const style = {
@@ -42,6 +42,14 @@ export default function Passwords() {
       overflow: "hidden",
       textOverflow: "ellipsis",
     },
+    PasswordBox: {
+      backgroundColor: "transparent",
+      border: "none",
+      borderRadius: 1,
+      color: "rgb(232, 232, 232)",
+      fontSize: "16px",
+      outline: "none",
+    },
   };
 
   //************* Using Context *************
@@ -53,6 +61,7 @@ export default function Passwords() {
   const [Label, SetLabel] = useState("");
   const [UserName, SetUserName] = useState("");
   const [Password, SetPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // console.log(selectedTab)
 
@@ -86,6 +95,12 @@ export default function Passwords() {
     let newList = [...Tabs.Passwords];
     newList.splice(index, 1);
     Tabs.SetPasswords([...newList]);
+  };
+
+  const togglePasswordVisibility = (index) => {
+    setShowPassword(!showPassword);
+    // setShowPassword(index === !showPassword ? null : index);
+
   };
 
   return (
@@ -158,9 +173,23 @@ export default function Passwords() {
                         <p style={style.truncate}>{data.UserName}</p>
                       </Grid>
                       <Grid item xs={4}>
-                        <p style={style.truncate}>{data.Password}</p>
+                     
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            value={data.Password}
+                            style={style.PasswordBox}
+                            readOnly
+                          />
+                        
                       </Grid>
                     </Grid>
+
+                    <Box style={{
+                          marginRight:"8px"
+                        }} 
+                        onClick={()=>togglePasswordVisibility(key)}>
+                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                    </Box>
 
                     <Box>
                       <MdOutlineDelete
