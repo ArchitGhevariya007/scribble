@@ -61,7 +61,7 @@ export default function Passwords() {
   const [Label, SetLabel] = useState("");
   const [UserName, SetUserName] = useState("");
   const [Password, SetPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(null);
 
   // console.log(selectedTab)
 
@@ -98,8 +98,8 @@ export default function Passwords() {
   };
 
   const togglePasswordVisibility = (index) => {
-    setShowPassword(!showPassword);
-    // setShowPassword(index === !showPassword ? null : index);
+    // setShowPassword(!showPassword);
+    setShowPassword(index === showPassword ? null : index);
 
   };
 
@@ -156,6 +156,7 @@ export default function Passwords() {
         {Tabs.Passwords.length > 0 &&
           Tabs.Passwords.map((data, key) => {
             if (selectedTab && data.TabId === selectedTab.TabId) {
+              const isPasswordVisible = key === showPassword;
               return (
                 <Container maxWidth="lg" key={key} sx={style.psdContainer}>
                   <Box
@@ -175,7 +176,7 @@ export default function Passwords() {
                       <Grid item xs={4}>
                      
                           <input
-                            type={showPassword ? "text" : "password"}
+                            type={isPasswordVisible ? "text" : "password"}
                             value={data.Password}
                             style={style.PasswordBox}
                             readOnly
@@ -188,7 +189,7 @@ export default function Passwords() {
                           marginRight:"8px"
                         }} 
                         onClick={()=>togglePasswordVisibility(key)}>
-                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      {isPasswordVisible ? <MdVisibilityOff /> : <MdVisibility />}
                     </Box>
 
                     <Box>
