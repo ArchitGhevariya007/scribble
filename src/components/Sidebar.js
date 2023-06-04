@@ -10,13 +10,16 @@ export default function Sidebar() {
   const style = {
     SideBarBody: {
       backgroundColor: "#2d3036",
-      width: "200px",
+      width: "100%",
+      maxWidth: "200px",
       pt: 3.5,
       p: 2,
+      minHeight: "100vh",
       height: "100vh",
       float: "left",
       position: "fixed",
       overflow: "auto",
+      
     },
     addButton: {
       mt: 1.5,

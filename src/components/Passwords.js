@@ -3,6 +3,8 @@ import { Box, Grid, TextField, Button, Container } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { TabContextCreate } from "../context/TabContext";
 import { MdOutlineDelete, MdVisibility, MdVisibilityOff } from "react-icons/md";
+ import  CryptoJS  from "crypto-js";
+
 
 export default function Passwords() {
   const style = {
@@ -63,11 +65,24 @@ export default function Passwords() {
   const [Password, SetPassword] = useState("");
   const [showPassword, setShowPassword] = useState(null);
 
-  // console.log(selectedTab)
+    //Encrypt and Decrypt password
+    const encryptPassword = (password) => {
+      const encryptedPassword = CryptoJS.AES.encrypt(password, "encryptionKey").toString();
+      return encryptedPassword;
+    };
+    
+    const decryptPassword = (encryptedPassword) => {
+      const decryptedPassword = CryptoJS.AES.decrypt(
+        encryptedPassword,
+        "encryptionKey"
+      ).toString(CryptoJS.enc.Utf8);
+      return decryptedPassword;
+    };
 
   //************* Add button handling *************
   const AddPassword = (e) => {
     if (Label !== "" && UserName !== "" && Password !== "") {
+       const encryptedPassword = encryptPassword(Password);
       Tabs.SetPasswords([
         ...Tabs.Passwords,
         {
@@ -75,7 +90,9 @@ export default function Passwords() {
           TabId: Tabs.selectedTabId,
           Label: Label,
           UserName: UserName,
-          Password: Password,
+          Password: encryptedPassword,
+          // Password: Password,
+
         },
       ]);
     }
@@ -102,6 +119,9 @@ export default function Passwords() {
     setShowPassword(index === showPassword ? null : index);
 
   };
+
+
+  
 
   return (
     <>
@@ -133,6 +153,7 @@ export default function Passwords() {
 
           <Grid item xs={12} sm={6} md={4}>
             <TextField
+            type="password"
               placeholder="Password"
               fullWidth
               sx={style.TextField}
@@ -177,7 +198,8 @@ export default function Passwords() {
                      
                           <input
                             type={isPasswordVisible ? "text" : "password"}
-                            value={data.Password}
+                            // value={data.Password}
+                            value={decryptPassword(data.Password)}
                             style={style.PasswordBox}
                             readOnly
                           />

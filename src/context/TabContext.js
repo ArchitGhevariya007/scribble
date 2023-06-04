@@ -62,7 +62,7 @@ export default function TabContext(props) {
   const getTabs = () => {
     const LocalTodo = localStorage.getItem("Tabs");
     if (LocalTodo === null) {
-      return [{ Tabid: uuid(), TabName: "New" }];
+      return [{ Tabid: uuid(), TabName: "New Tab" }];
     } else {
       return JSON.parse(LocalTodo);
     }
@@ -70,13 +70,13 @@ export default function TabContext(props) {
 
   //Tabs State
   const [Tab, SetTab] = useState(getTabs());
-  const [selectedTabId, setSelectedTabId] = useState(Tab[0].Tabid);
+  const [selectedTabId, setSelectedTabId] = useState(Tab.length > 0 ? Tab[0].Tabid : null);
 
   //************* Add Tabs *************
   const AddTab = () => {
     SetTab([
       ...Tab,
-      {
+      { 
         Tabid: uuid(),
         TabName: "",
       },

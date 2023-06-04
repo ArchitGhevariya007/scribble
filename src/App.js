@@ -1,4 +1,5 @@
 import "./App.css";
+import React from "react";
 import { createTheme, ThemeProvider, useMediaQuery } from "@mui/material";
 import Mobile from "./components/Mobile";
 import MainCotainer from "./components/MainContainer";
