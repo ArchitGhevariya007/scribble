@@ -15,7 +15,7 @@ export default function MainCotainer() {
     <TabContext>
         <Navbar></Navbar>
         <Sidebar></Sidebar>
-        <ContentTab />
+        <ContentTab ></ContentTab >
       </TabContext>
     </Box>
 

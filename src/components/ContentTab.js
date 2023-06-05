@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Tab, Typography, Grid } from "@mui/material";
 import { TabPanel, TabContext, TabList } from "@mui/lab";
 import { useState } from "react";
 import Todos from "./Todos";
 import Notes from "./Notes";
 import Passwords from "./Passwords";
+import { TabContextCreate } from "../context/TabContext";
 
-// import Links from "./Links";
+//************* Using Context *************
 
 // Main function
 export default function ContentTab() {
+  const Tabs = useContext(TabContextCreate);
   const [value, setValue] = useState("1");
   const [SearchText, SetSearchText] = useState("");
 
@@ -20,12 +22,14 @@ export default function ContentTab() {
   const style = {
     mainContainer: {
       marginTop: 6.5,
-      marginLeft: "220px",
+      // marginLeft: "220px",
+      marginLeft: Tabs.isMobile ? "0" : "220px",
       padding: 3,
       // width: "auto",
       maxWidth: "100%",
       overflowX: "hidden",
     },
+
     TabsContainer: {
       mt: 3,
     },

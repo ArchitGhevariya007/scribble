@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Stack, Grid, Button, TextField } from "@mui/material";
 import { IoIosMenu } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -6,7 +6,8 @@ import { MdOutlineDelete } from "react-icons/md";
 import { TabContextCreate } from "../context/TabContext";
 
 export default function Sidebar() {
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  //************* Using Context *************
+  const Tabs = useContext(TabContextCreate);
 
   //Style
   const style = {
@@ -16,14 +17,16 @@ export default function Sidebar() {
       maxWidth: "200px",
       pt: 3.5,
       p: 2,
-      minHeight: "100%",
+      // minHeight: "100%",
+      minHeight: "100vh",
+
       height: "100%",
       float: "left",
       position: "fixed",
       overflow: "auto",
       zIndex: 1,
-      // marginTop:"7.5vh"
-      display: sidebarVisible ? "block" : "none",
+      transition: "transform 0.4s ease-in-out", // Added transition property for smooth animation
+      transform: Tabs.sidebarVisible ? "translateX(0)" : "translateX(-100%)", // Added transform property to move the sidebar off-screen
     },
     addButton: {
       mt: 1.5,
@@ -73,21 +76,28 @@ export default function Sidebar() {
     },
   };
 
-  //************* Using Context *************
-  const Tabs = useContext(TabContextCreate);
+  useEffect(() => {
+    const handleWindowResize = () => {
+      const isMobileScreen = window.innerWidth <= 767;
+      Tabs.setIsMobile(isMobileScreen);
+      if (isMobileScreen) {
+        Tabs.setSidebarVisible(false);
+      } else {
+        Tabs.setSidebarVisible(true);
+      }
+    };
 
-  const handleToggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
+    handleWindowResize(); // Set initial isMobile state on component mount
 
+    window.addEventListener("resize", handleWindowResize); // Update isMobile state on window resize
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize); // Cleanup the event listener on component unmount
+    };
+  }, []);
 
   return (
     <>
-    <Box sx={style.toggleButton}>
-        <Button variant="outlined" onClick={handleToggleSidebar}>
-          Toggle Sidebar
-        </Button>
-      </Box>
       <Box sx={style.SideBarBody}>
         {Tabs.Tab.map((tab, index) => (
           <Box

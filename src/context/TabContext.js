@@ -123,6 +123,11 @@ export default function TabContext(props) {
     setSelectedTabId(tabId);
   };
 
+
+    //**************************************************** Sidebar Toggle ****************************************************
+
+    const [sidebarVisible, setSidebarVisible] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
   return (
     <>
       <TabContextCreate.Provider
@@ -140,7 +145,11 @@ export default function TabContext(props) {
           Note,
           SetNote,
           Passwords,
-          SetPasswords
+          SetPasswords,
+          sidebarVisible,
+          setSidebarVisible,
+          isMobile,
+          setIsMobile
         }}
       >
         {props.children}
