@@ -3,10 +3,9 @@ import { Box, Grid, TextField, Button, Container } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { TabContextCreate } from "../context/TabContext";
 import { MdOutlineDelete, MdVisibility, MdVisibilityOff } from "react-icons/md";
- import  CryptoJS  from "crypto-js";
+import CryptoJS from "crypto-js";
 
-
-export default function Passwords() {
+export default function Passwords(props) {
   const style = {
     TextField: {
       backgroundColor: "transparent",
@@ -65,24 +64,27 @@ export default function Passwords() {
   const [Password, SetPassword] = useState("");
   const [showPassword, setShowPassword] = useState(null);
 
-    //Encrypt and Decrypt password
-    const encryptPassword = (password) => {
-      const encryptedPassword = CryptoJS.AES.encrypt(password, "encryptionKey").toString();
-      return encryptedPassword;
-    };
-    
-    const decryptPassword = (encryptedPassword) => {
-      const decryptedPassword = CryptoJS.AES.decrypt(
-        encryptedPassword,
-        "encryptionKey"
-      ).toString(CryptoJS.enc.Utf8);
-      return decryptedPassword;
-    };
+  //Encrypt and Decrypt password
+  const encryptPassword = (password) => {
+    const encryptedPassword = CryptoJS.AES.encrypt(
+      password,
+      "encryptionKey"
+    ).toString();
+    return encryptedPassword;
+  };
+
+  const decryptPassword = (encryptedPassword) => {
+    const decryptedPassword = CryptoJS.AES.decrypt(
+      encryptedPassword,
+      "encryptionKey"
+    ).toString(CryptoJS.enc.Utf8);
+    return decryptedPassword;
+  };
 
   //************* Add button handling *************
   const AddPassword = (e) => {
     if (Label !== "" && UserName !== "" && Password !== "") {
-       const encryptedPassword = encryptPassword(Password);
+      const encryptedPassword = encryptPassword(Password);
       Tabs.SetPasswords([
         ...Tabs.Passwords,
         {
@@ -92,7 +94,6 @@ export default function Passwords() {
           UserName: UserName,
           Password: encryptedPassword,
           // Password: Password,
-
         },
       ]);
     }
@@ -117,11 +118,12 @@ export default function Passwords() {
   const togglePasswordVisibility = (index) => {
     // setShowPassword(!showPassword);
     setShowPassword(index === showPassword ? null : index);
-
   };
 
-
-  
+  // Filter the labels based on the search text
+  const filteredLabels = Tabs.Passwords.filter((psd) =>
+    psd.Label.toLowerCase().includes(props.searchText.toLowerCase())
+  );
 
   return (
     <>
@@ -153,7 +155,7 @@ export default function Passwords() {
 
           <Grid item xs={12} sm={6} md={4}>
             <TextField
-            type="password"
+              type="password"
               placeholder="Password"
               fullWidth
               sx={style.TextField}
@@ -175,7 +177,7 @@ export default function Passwords() {
       {/* Task List */}
       <Box sx={style.psdlist}>
         {Tabs.Passwords.length > 0 &&
-          Tabs.Passwords.map((data, key) => {
+          filteredLabels.map((data, key) => {
             if (selectedTab && data.TabId === selectedTab.TabId) {
               const isPasswordVisible = key === showPassword;
               return (
@@ -195,23 +197,27 @@ export default function Passwords() {
                         <p style={style.truncate}>{data.UserName}</p>
                       </Grid>
                       <Grid item xs={4}>
-                     
-                          <input
-                            type={isPasswordVisible ? "text" : "password"}
-                            // value={data.Password}
-                            value={decryptPassword(data.Password)}
-                            style={style.PasswordBox}
-                            readOnly
-                          />
-                        
+                        <input
+                          type={isPasswordVisible ? "text" : "password"}
+                          // value={data.Password}
+                          value={decryptPassword(data.Password)}
+                          style={style.PasswordBox}
+                          readOnly
+                        />
                       </Grid>
                     </Grid>
 
-                    <Box style={{
-                          marginRight:"8px"
-                        }} 
-                        onClick={()=>togglePasswordVisibility(key)}>
-                      {isPasswordVisible ? <MdVisibilityOff /> : <MdVisibility />}
+                    <Box
+                      style={{
+                        marginRight: "8px",
+                      }}
+                      onClick={() => togglePasswordVisibility(key)}
+                    >
+                      {isPasswordVisible ? (
+                        <MdVisibilityOff />
+                      ) : (
+                        <MdVisibility />
+                      )}
                     </Box>
 
                     <Box>

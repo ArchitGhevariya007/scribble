@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import { createTheme, ThemeProvider, useMediaQuery } from "@mui/material";
-import Mobile from "./components/Mobile";
+// import Mobile from "./components/Mobile";
 import MainCotainer from "./components/MainContainer";
 
 const theme = createTheme({
@@ -25,7 +25,10 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         {/* If screen size is small then it will call Mobile component */}
-        {isMobile ? <Mobile /> : <MainCotainer></MainCotainer>}
+        {isMobile ? 
+        // <Mobile /> 
+        <MainCotainer/>
+        : <MainCotainer/>}
       </ThemeProvider>
     </>
   );

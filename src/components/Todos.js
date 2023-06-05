@@ -44,6 +44,7 @@ export default function Todos(props) {
       padding: 0.5,
       borderRadius: 1,
       width: "100%",
+      maxWidth:"100%",
       "&:hover": {
         backgroundColor: "#353940",
         cursor: "pointer",

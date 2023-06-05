@@ -11,9 +11,9 @@ import Passwords from "./Passwords";
 // Main function
 export default function ContentTab() {
   const [value, setValue] = useState("1");
-  const [SearchText,SetSearchText]=useState("");
+  const [SearchText, SetSearchText] = useState("");
 
-  const handleChange = (event,newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -22,7 +22,9 @@ export default function ContentTab() {
       marginTop: 6.5,
       marginLeft: "220px",
       padding: 3,
-      width: "auto",
+      // width: "auto",
+      maxWidth: "100%",
+      overflowX: "hidden",
     },
     TabsContainer: {
       mt: 3,
@@ -52,50 +54,73 @@ export default function ContentTab() {
   });
 
   return (
-    <Box sx={style.mainContainer}>
-      {/* Header Container */}
-      <Box sx={style.HeaderContainer}>
-        <Grid container spacing={2}>
-          {/* Date and Time */}
-          <Grid item xs={9}>
-            <Typography variant="h4">{today}</Typography>
+    <>
+      <Box sx={style.mainContainer}>
+        {/* Header Container */}
+        <Box>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="baseline"
+          >
+            {/* Date and Time */}
+            <Grid xs>
+              <Typography variant="h4">{today}</Typography>
+            </Grid>
+            {/* Search Box */}
+            <Grid>
+              <input
+                type="text"
+                placeholder="Search"
+                style={style.SearchBox}
+                onChange={(e) => {
+                  SetSearchText(e.target.value);
+                }}
+              />
+            </Grid>
           </Grid>
+        </Box>
 
-          {/* Search Box */}
-          <Grid item xs={1}>
-            <input
-              type="text"
-              placeholder="Search"
-              style={style.SearchBox}
-              onChange={(e)=>{SetSearchText(e.target.value)}}
-            />
-          </Grid>
-        </Grid>
+        <Box sx={style.TabsContainer}>
+          <TabContext value={value}>
+            {/* Tabs */}
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList onChange={handleChange}>
+                <Tab
+                  label="Todos"
+                  value="1"
+                  disableRipple
+                  sx={style.TabColor}
+                />
+                <Tab
+                  label="Notes"
+                  value="2"
+                  disableRipple
+                  sx={style.TabColor}
+                />
+                <Tab
+                  label="Passwords "
+                  value="3"
+                  disableRipple
+                  sx={style.TabColor}
+                />
+              </TabList>
+            </Box>
+
+            {/* Tab Content */}
+            <TabPanel value="1">
+              <Todos searchText={SearchText} />
+            </TabPanel>
+            <TabPanel value="2">
+              <Notes searchText={SearchText} />
+            </TabPanel>
+            <TabPanel value="3">
+              <Passwords searchText={SearchText} />
+            </TabPanel>
+          </TabContext>
+        </Box>
       </Box>
-
-      <Box sx={style.TabsContainer}>
-        <TabContext value={value}>
-          {/* Tabs */}
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange}>
-              <Tab label="Todos" value="1" disableRipple sx={style.TabColor} />
-              <Tab label="Notes" value="2" disableRipple sx={style.TabColor} />
-              <Tab label="Passwords " value="3" disableRipple sx={style.TabColor} />
-            </TabList>
-          </Box>
-
-          {/* Tab Content */}
-          <TabPanel value="1">
-            <Todos searchText={SearchText}/>
-          </TabPanel>
-          <TabPanel value="2">
-            <Notes searchText={SearchText} />
-          </TabPanel >
-          <TabPanel value="3">
-            <Passwords/>
-          </TabPanel>
-        </TabContext>
-      </Box>
-    </Box>
+    </>
   );
 }
