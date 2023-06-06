@@ -6,7 +6,16 @@ import { MdOutlineDelete, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import CryptoJS from "crypto-js";
 
 export default function Passwords(props) {
+    //************* Using Context *************
+    const Tabs = useContext(TabContextCreate);
+    const selectedTab = Tabs.Passwords.find(
+      (tab) => tab.TabId === Tabs.selectedTabId
+    );
+
   const style = {
+    PsdAddBox:{
+      px:Tabs.isMobile ? 0 : 3.5,
+    },
     TextField: {
       backgroundColor: "transparent",
       border: "2px #2d3036  solid",
@@ -17,19 +26,21 @@ export default function Passwords(props) {
       "& fieldset": { border: "none" },
     },
     psdlist: {
-      padding: 1,
+      // padding: 1,
       mt: 2,
       borderRadius: 2,
       minHeight: "48vh",
       height: "auto",
       marginBottom: "10px",
+      px:Tabs.isMobile ? 0 : 3.5,
     },
     psdContainer: {
       backgroundColor: "#2d3036",
       mt: 1,
       mb: 1,
-      padding: 0.1,
       borderRadius: 1,
+      width: "100%",
+      maxWidth:"100%",
       "&:hover": {
         backgroundColor: "#353940",
         cursor: "pointer",
@@ -53,11 +64,7 @@ export default function Passwords(props) {
     },
   };
 
-  //************* Using Context *************
-  const Tabs = useContext(TabContextCreate);
-  const selectedTab = Tabs.Passwords.find(
-    (tab) => tab.TabId === Tabs.selectedTabId
-  );
+
 
   const [Label, SetLabel] = useState("");
   const [UserName, SetUserName] = useState("");
@@ -127,6 +134,7 @@ export default function Passwords(props) {
 
   return (
     <>
+    <Box sx={style.PsdAddBox}>
       <form onSubmit={AddPassword}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sm={6} md={3}>
@@ -173,6 +181,7 @@ export default function Passwords(props) {
           </Grid>
         </Grid>
       </form>
+      </Box>
 
       {/* Task List */}
       <Box sx={style.psdlist}>
@@ -181,7 +190,7 @@ export default function Passwords(props) {
             if (selectedTab && data.TabId === selectedTab.TabId) {
               const isPasswordVisible = key === showPassword;
               return (
-                <Container maxWidth="lg" key={key} sx={style.psdContainer}>
+                <Container maxWidth key={key} sx={style.psdContainer}>
                   <Box
                     style={{
                       display: "flex",

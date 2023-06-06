@@ -22,16 +22,32 @@ export default function ContentTab() {
   const style = {
     mainContainer: {
       marginTop: 6.5,
-      // marginLeft: "220px",
       marginLeft: Tabs.isMobile ? "0" : "220px",
-      padding: 3,
-      // width: "auto",
+      // padding: 3,
       maxWidth: "100%",
       overflowX: "hidden",
     },
-
+    Contentheader: {
+      padding: 3,
+    },
     TabsContainer: {
-      mt: 3,
+      width: "100%",
+    },
+    TabsTitle: {
+      //  borderBottom: 1,
+      //  borderColor: "divider",
+      p: "0 24px",
+      position: "relative",
+      "&::after": {
+        content: '""',
+        position: "absolute",
+        bottom: 0,
+        left: "0px",
+        right: "24px",
+        height: "0.8px",
+        background:
+          "linear-gradient(to right, transparent, transparent 24px, #1e2126 24px, #1e2126)",
+      },
     },
     HeaderContainer: {
       color: "rgb(255, 255, 255)",
@@ -48,6 +64,9 @@ export default function ContentTab() {
     TabColor: {
       color: "rgb(232, 232, 232)",
     },
+    dateTime: {
+      fontSize: Tabs.isMobile ? "24px" : "32px",
+    },
   };
 
   //Clock
@@ -61,7 +80,7 @@ export default function ContentTab() {
     <>
       <Box sx={style.mainContainer}>
         {/* Header Container */}
-        <Box>
+        <Box sx={style.Contentheader}>
           <Grid
             container
             direction="row"
@@ -70,10 +89,10 @@ export default function ContentTab() {
           >
             {/* Date and Time */}
             <Grid xs>
-              <Typography variant="h4">{today}</Typography>
+              <Typography sx={style.dateTime}>{today}</Typography>
             </Grid>
             {/* Search Box */}
-            <Grid>
+            <Grid style={{ marginTop: "10px" }}>
               <input
                 type="text"
                 placeholder="Search"
@@ -89,7 +108,7 @@ export default function ContentTab() {
         <Box sx={style.TabsContainer}>
           <TabContext value={value}>
             {/* Tabs */}
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box sx={style.TabsTitle}>
               <TabList onChange={handleChange}>
                 <Tab
                   label="Todos"

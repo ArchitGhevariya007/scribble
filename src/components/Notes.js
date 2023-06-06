@@ -10,7 +10,6 @@ const style = {
   MainContainer: {
     display: "flex",
     flexWrap: "wrap",
-    p: 1,
   },
   AddButtonContainer: {
     border: "3px solid #2d3036",
@@ -20,8 +19,9 @@ const style = {
     p: 1.5,
     borderRadius: 1,
     overflow: "hidden",
-    marginRight: 3,
-    marginTop: 3,
+    // mx: 3,
+    // mx:"auto",
+    // marginTop: 1,
     position: "relative",
     cursor: "pointer",
   },

@@ -14,11 +14,16 @@ import { MdOutlineDelete } from "react-icons/md";
 import { TabContextCreate } from "../context/TabContext";
 
 export default function Todos(props) {
+  
+  //************* Using Context *************
+  const Tabs = useContext(TabContextCreate);
+
+  const selectedTab = Tabs.Tab.find((tab) => tab.Tabid === Tabs.selectedTabId);
+
   //Css
   const style = {
     addBox: {
-      borderRadius: 0.3,
-      padding: 1,
+      px:Tabs.isMobile ? 0 : 3.5,
     },
     addTextField: {
       backgroundColor: "transparent",
@@ -30,18 +35,20 @@ export default function Todos(props) {
       "& fieldset": { border: "none" },
     },
     todolist: {
-      padding: 1,
       mt: 2,
       borderRadius: 2,
       minHeight: "48vh",
       height: "auto",
       marginBottom: "10px",
+      px:Tabs.isMobile ? 0 : 3.5,
+      
     },
     todoContainer: {
       backgroundColor: "#2d3036",
       mt: 1,
       mb: 1,
-      padding: 0.5,
+      paddingTop:0.5,
+      paddingBottom:0.5,
       borderRadius: 1,
       width: "100%",
       maxWidth:"100%",
@@ -57,10 +64,6 @@ export default function Todos(props) {
     },
   };
 
-  //************* Using Context *************
-  const Tabs = useContext(TabContextCreate);
-
-  const selectedTab = Tabs.Tab.find((tab) => tab.Tabid === Tabs.selectedTabId);
 
   //************* Add button handling *************
   const AddTodo = (e) => {
@@ -138,7 +141,7 @@ export default function Todos(props) {
           ? filteredTodos.map((data, key) => {
               if (selectedTab && data.TabId === selectedTab.Tabid ) {
                 return (
-                  <Container maxWidth="lg" key={key} sx={style.todoContainer}>
+                  <Container maxWidth key={key} sx={style.todoContainer}>
                     <Stack
                       direction="row"
                       justifyContent="space-between"
