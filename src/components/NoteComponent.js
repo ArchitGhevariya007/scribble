@@ -12,8 +12,10 @@ export default function NoteComponent(props) {
       p: 1.5,
       borderRadius: 1,
       overflow: "hidden",
-      mr: 2,
+      mr: 1,
       mb: 2,
+      margin:"auto",
+      mt:2
     },
     contentBox: {
       height: "231px",

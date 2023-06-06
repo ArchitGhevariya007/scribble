@@ -24,6 +24,8 @@ const style = {
     // marginTop: 1,
     position: "relative",
     cursor: "pointer",
+    mt:2,
+    ml:3
   },
   AddButton: {
     position: "absolute",
