@@ -23,7 +23,6 @@ export default function Navbar() {
     },
     LogoText: {
       fontSize: "20px",
-      // fontSize: isMobile ? "16px" : "20px",
       fontweight: 700,
       letterSpacing: "2px",
     },
@@ -31,8 +30,8 @@ export default function Navbar() {
       cursor: "pointer",
       fontSize: 24,
       color: "rgb(232, 232, 232)",
-      marginRight:"8px",
-      marginTop:"5px"
+      marginRight: "8px",
+      marginTop: "5px",
     },
   };
 

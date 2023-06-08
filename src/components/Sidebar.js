@@ -17,9 +17,7 @@ export default function Sidebar() {
       maxWidth: "200px",
       pt: 3.5,
       p: 2,
-      // minHeight: "100%",
       minHeight: "100vh",
-
       height: "100%",
       float: "left",
       position: "fixed",
@@ -56,7 +54,6 @@ export default function Sidebar() {
       cursor: "pointer",
     },
     SidebarItem: {
-      //backgroundColor: "#22262b",
       borderRadius: 1,
       padding: 0.5,
       alignItems: "center",

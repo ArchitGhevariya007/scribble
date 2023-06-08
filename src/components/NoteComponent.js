@@ -14,9 +14,6 @@ export default function NoteComponent(props) {
       overflow: "hidden",
       mr: 1,
       mb: 1,
-      
-      // margin:"auto",
-      // mt:2
     },
     contentBox: {
       height: "231px",
@@ -71,7 +68,6 @@ export default function NoteComponent(props) {
             }
           />
         </Box>
-
 
         {/* Note footer */}
         <Box component="div" sx={style.footer}>

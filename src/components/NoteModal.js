@@ -77,7 +77,7 @@ export default function NoteModal(props) {
                 props.handleNoteChange(props.index, "Title", event.target.value)
               }
             />
-            
+
             {/* Modal content */}
             <Box component="div" sx={style.contentBox}>
               <TextField

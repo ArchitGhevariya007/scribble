@@ -5,7 +5,6 @@ import { v4 as uuid } from "uuid";
 export const TabContextCreate = createContext();
 
 export default function TabContext(props) {
-
   //**************************************************** Todos ****************************************************
 
   //getting data from local storage and adding to state
@@ -25,19 +24,18 @@ export default function TabContext(props) {
 
   //**************************************************** Notes ****************************************************
 
-    //************* get data from local storage *************
-    const getNotes = () => {
-      const LocalNotes = localStorage.getItem("Notes");
-      if (LocalNotes === null) {
-        return [];
-      } else {
-        return JSON.parse(LocalNotes);
-      }
-    };
-  
-    //Notes State
-    const [Note, SetNote] = useState(getNotes());
+  //************* get data from local storage *************
+  const getNotes = () => {
+    const LocalNotes = localStorage.getItem("Notes");
+    if (LocalNotes === null) {
+      return [];
+    } else {
+      return JSON.parse(LocalNotes);
+    }
+  };
 
+  //Notes State
+  const [Note, SetNote] = useState(getNotes());
 
   //**************************************************** Passwords ****************************************************
 
@@ -51,10 +49,7 @@ export default function TabContext(props) {
     }
   };
 
-  const [Passwords,SetPasswords]=useState(getPassword());
-
-
-
+  const [Passwords, SetPasswords] = useState(getPassword());
 
   //**************************************************** Tabs ****************************************************
 
@@ -70,13 +65,15 @@ export default function TabContext(props) {
 
   //Tabs State
   const [Tab, SetTab] = useState(getTabs());
-  const [selectedTabId, setSelectedTabId] = useState(Tab.length > 0 ? Tab[0].Tabid : null);
+  const [selectedTabId, setSelectedTabId] = useState(
+    Tab.length > 0 ? Tab[0].Tabid : null
+  );
 
   //************* Add Tabs *************
   const AddTab = () => {
     SetTab([
       ...Tab,
-      { 
+      {
         Tabid: uuid(),
         TabName: "",
       },
@@ -123,11 +120,10 @@ export default function TabContext(props) {
     setSelectedTabId(tabId);
   };
 
+  //**************************************************** Sidebar Toggle ****************************************************
 
-    //**************************************************** Sidebar Toggle ****************************************************
-
-    const [sidebarVisible, setSidebarVisible] = useState(true);
-    const [isMobile, setIsMobile] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   return (
     <>
       <TabContextCreate.Provider
@@ -149,7 +145,7 @@ export default function TabContext(props) {
           sidebarVisible,
           setSidebarVisible,
           isMobile,
-          setIsMobile
+          setIsMobile,
         }}
       >
         {props.children}

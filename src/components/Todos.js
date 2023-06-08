@@ -9,12 +9,10 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
-//import { RxPencil1 } from "react-icons/rx";
 import { MdOutlineDelete } from "react-icons/md";
 import { TabContextCreate } from "../context/TabContext";
 
 export default function Todos(props) {
-  
   //************* Using Context *************
   const Tabs = useContext(TabContextCreate);
 
@@ -23,7 +21,7 @@ export default function Todos(props) {
   //Css
   const style = {
     addBox: {
-      px:Tabs.isMobile ? 0 : 3.5,
+      px: Tabs.isMobile ? 0 : 3.5,
     },
     addTextField: {
       backgroundColor: "transparent",
@@ -40,18 +38,17 @@ export default function Todos(props) {
       minHeight: "48vh",
       height: "auto",
       marginBottom: "10px",
-      px:Tabs.isMobile ? 0 : 3.5,
-      
+      px: Tabs.isMobile ? 0 : 3.5,
     },
     todoContainer: {
       backgroundColor: "#2d3036",
       mt: 1,
       mb: 1,
-      paddingTop:0.5,
-      paddingBottom:0.5,
+      paddingTop: 0.5,
+      paddingBottom: 0.5,
       borderRadius: 1,
       width: "100%",
-      maxWidth:"100%",
+      maxWidth: "100%",
       "&:hover": {
         backgroundColor: "#353940",
         cursor: "pointer",
@@ -63,7 +60,6 @@ export default function Todos(props) {
       color: "rgb(232, 232, 232)",
     },
   };
-
 
   //************* Add button handling *************
   const AddTodo = (e) => {
@@ -139,7 +135,7 @@ export default function Todos(props) {
       <Box sx={style.todolist}>
         {Tabs.AddTodoText != null
           ? filteredTodos.map((data, key) => {
-              if (selectedTab && data.TabId === selectedTab.Tabid ) {
+              if (selectedTab && data.TabId === selectedTab.Tabid) {
                 return (
                   <Container maxWidth key={key} sx={style.todoContainer}>
                     <Stack
@@ -173,7 +169,6 @@ export default function Todos(props) {
                       />
 
                       <Box>
-                        {/* <RxPencil1 style={{ marginRight: 10, cursor: "pointer" }} /> */}
                         <MdOutlineDelete
                           style={{
                             cursor: "pointer",

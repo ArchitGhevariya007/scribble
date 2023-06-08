@@ -1,20 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Box, Grid, TextField, Button, Container } from "@mui/material";
+import {
+  Box,
+  Grid,
+  TextField,
+  Button,
+  Container,
+  Tooltip,
+} from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { TabContextCreate } from "../context/TabContext";
 import { MdOutlineDelete, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import CryptoJS from "crypto-js";
 
 export default function Passwords(props) {
-    //************* Using Context *************
-    const Tabs = useContext(TabContextCreate);
-    const selectedTab = Tabs.Passwords.find(
-      (tab) => tab.TabId === Tabs.selectedTabId
-    );
+  //************* Using Context *************
+  const Tabs = useContext(TabContextCreate);
+  const selectedTab = Tabs.Passwords.find(
+    (tab) => tab.TabId === Tabs.selectedTabId
+  );
 
   const style = {
-    PsdAddBox:{
-      px:Tabs.isMobile ? 0 : 3.5,
+    PsdAddBox: {
+      px: Tabs.isMobile ? 0 : 3.5,
     },
     TextField: {
       backgroundColor: "transparent",
@@ -26,13 +33,12 @@ export default function Passwords(props) {
       "& fieldset": { border: "none" },
     },
     psdlist: {
-      // padding: 1,
       mt: 2,
       borderRadius: 2,
       minHeight: "48vh",
       height: "auto",
       marginBottom: "10px",
-      px:Tabs.isMobile ? 0 : 3.5,
+      px: Tabs.isMobile ? 0 : 3.5,
     },
     psdContainer: {
       backgroundColor: "#2d3036",
@@ -40,7 +46,7 @@ export default function Passwords(props) {
       mb: 1,
       borderRadius: 1,
       width: "100%",
-      maxWidth:"100%",
+      maxWidth: "100%",
       "&:hover": {
         backgroundColor: "#353940",
         cursor: "pointer",
@@ -62,9 +68,13 @@ export default function Passwords(props) {
       fontSize: "16px",
       outline: "none",
     },
+    UserName: {
+      "&:hover": {
+        backgroundColor: "#1976d2",
+        color: "#fff",
+      },
+    },
   };
-
-
 
   const [Label, SetLabel] = useState("");
   const [UserName, SetUserName] = useState("");
@@ -132,55 +142,59 @@ export default function Passwords(props) {
     psd.Label.toLowerCase().includes(props.searchText.toLowerCase())
   );
 
+  const copyUsername = (username) => {
+    navigator.clipboard.writeText(username);
+  };
+
   return (
     <>
-    <Box sx={style.PsdAddBox}>
-      <form onSubmit={AddPassword}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              placeholder="Enter Label"
-              fullWidth
-              sx={style.TextField}
-              onChange={(e) => {
-                SetLabel(e.target.value);
-              }}
-              value={Label}
-            />
-          </Grid>
+      <Box sx={style.PsdAddBox}>
+        <form onSubmit={AddPassword}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} sm={6} md={3}>
+              <TextField
+                placeholder="Enter Label"
+                fullWidth
+                sx={style.TextField}
+                onChange={(e) => {
+                  SetLabel(e.target.value);
+                }}
+                value={Label}
+              />
+            </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <TextField
-              placeholder="Username"
-              fullWidth
-              sx={style.TextField}
-              onChange={(e) => {
-                SetUserName(e.target.value);
-              }}
-              value={UserName}
-            />
-          </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <TextField
+                placeholder="Username"
+                fullWidth
+                sx={style.TextField}
+                onChange={(e) => {
+                  SetUserName(e.target.value);
+                }}
+                value={UserName}
+              />
+            </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <TextField
-              type="password"
-              placeholder="Password"
-              fullWidth
-              sx={style.TextField}
-              onChange={(e) => {
-                SetPassword(e.target.value);
-              }}
-              value={Password}
-            />
-          </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <TextField
+                type="password"
+                placeholder="Password"
+                fullWidth
+                sx={style.TextField}
+                onChange={(e) => {
+                  SetPassword(e.target.value);
+                }}
+                value={Password}
+              />
+            </Grid>
 
-          <Grid item xs={12} sm={6} md={1}>
-            <Button variant="contained" size="large" type="submit">
-              Add
-            </Button>
+            <Grid item xs={12} sm={6} md={1}>
+              <Button variant="contained" size="large" type="submit">
+                Add
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
+        </form>
       </Box>
 
       {/* Task List */}
@@ -203,12 +217,18 @@ export default function Passwords(props) {
                         <p style={style.truncate}>{data.Label}</p>
                       </Grid>
                       <Grid item xs={4}>
-                        <p style={style.truncate}>{data.UserName}</p>
+                        <Tooltip title="Copy" arrow>
+                          <p
+                            style={{ ...style.truncate, ...style.UserName }}
+                            onClick={() => copyUsername(data.UserName)}
+                          >
+                            {data.UserName}
+                          </p>
+                        </Tooltip>
                       </Grid>
                       <Grid item xs={4}>
                         <input
                           type={isPasswordVisible ? "text" : "password"}
-                          // value={data.Password}
                           value={decryptPassword(data.Password)}
                           style={style.PasswordBox}
                           readOnly

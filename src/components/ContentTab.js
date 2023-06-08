@@ -23,7 +23,6 @@ export default function ContentTab() {
     mainContainer: {
       marginTop: 6.5,
       marginLeft: Tabs.isMobile ? "0" : "220px",
-      // padding: 3,
       maxWidth: "100%",
       overflowX: "hidden",
     },
@@ -34,8 +33,6 @@ export default function ContentTab() {
       width: "100%",
     },
     TabsTitle: {
-      //  borderBottom: 1,
-      //  borderColor: "divider",
       p: "0 24px",
       position: "relative",
       "&::after": {
