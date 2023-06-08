@@ -17,7 +17,7 @@ export default function TabContext(props) {
       return JSON.parse(LocalTodo);
     }
   };
-
+  
   //************* Add todo text *************
   const [TodoText, SetTodoText] = useState("");
   const [AddTodoText, SetAddTodoText] = useState(getTodos());
